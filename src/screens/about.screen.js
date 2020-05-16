@@ -58,7 +58,7 @@ class AboutScreen extends Component {
               <Text
                 style={styles.hyperlink}
                 onPress={() =>
-                  Linking.openURL('https://github.com/khairmuhammad-ybh')
+                  Linking.openURL('https://github.com/khairmuhammad-ybh/NSPayslipComparer')
                 }>
                 {stringResource.aboutContent.applicationInfo.github}
               </Text>

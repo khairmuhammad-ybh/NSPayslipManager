@@ -36,7 +36,7 @@ const stringResource = {
     },
     applicationInfo: {
       developer: 'Muhammad Khairi',
-      github: 'Khairmuhammad-ybh',
+      github: 'NSPayslipComparer@Github',
       version: '1.0',
     },
   },
