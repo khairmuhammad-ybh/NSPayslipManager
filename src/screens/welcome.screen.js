@@ -26,8 +26,8 @@ class WelcomeScreen extends Component {
     this.state = {
       divSelected: 'key1',
       troopSelected: 'key2',
-      rankNameSelected: 'key3',
-      rankPaySelected: 'key4',
+      rankNameSelected: 'SC2',
+      rankPaySelected: '600',
       name: '',
     };
   }
@@ -45,6 +45,7 @@ class WelcomeScreen extends Component {
   }
 
   onRankValueChange(rankValue, rankIndex) {
+    console.log(stringResource.pickerRankContent.ranks[rankIndex], rankValue)
     this.setState({
       rankPaySelected: rankValue,
       rankNameSelected: stringResource.pickerRankContent.ranks[rankIndex],
@@ -175,7 +176,7 @@ class WelcomeScreen extends Component {
             <Picker
               mode={'dropdown'}
               style={styles.textInput}
-              selectedValue={this.state.rankSelected}
+              selectedValue={this.state.rankPaySelected}
               onValueChange={(rankValue, rankIndex) =>
                 this.onRankValueChange(rankValue, rankIndex)
               }>

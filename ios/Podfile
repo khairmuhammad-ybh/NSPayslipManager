@@ -79,10 +79,6 @@ target 'NSPayslipComparer' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'RNFBMLVision', :path => '../node_modules/@react-native-firebase/ml-vision'
-
-  pod 'RealmJS', :path => '../node_modules/realm'
-
   target 'NSPayslipComparerTests' do
     inherit! :complete
     # Pods for testing
