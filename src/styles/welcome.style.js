@@ -2,9 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 
 const styles = StyleSheet.create({
   headerContainer: {
-    position: 'absolute',
-    top: 95,
-    left: 0,
+    marginBottom: 30,
   },
   headerText: {
     fontSize: 36,
@@ -29,14 +27,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width - 50,
   },
   buttonInput: {
-    position: 'absolute',
-    bottom: '15%',
     padding: 12,
     borderColor: '#708CB5',
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 3,
-    width: Dimensions.get('screen').width - 300,
     alignItems: 'center',
   },
   btnText: {
@@ -50,7 +45,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 1.5,
-    width: Dimensions.get('screen').width / 2 - 45,
+    width: Dimensions.get('screen').width / 2 - 35,
   },
   horizontalFlexContainer: {
     flexDirection: 'row',

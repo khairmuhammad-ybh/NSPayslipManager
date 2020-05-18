@@ -45,10 +45,10 @@ class WelcomeScreen extends Component {
   }
 
   onRankValueChange(rankValue, rankIndex) {
-    console.log(stringResource.pickerRankContent.ranks[rankIndex], rankValue)
     this.setState({
       rankPaySelected: rankValue,
-      rankNameSelected: stringResource.pickerRankContent.ranks[rankIndex],
+      rankNameSelected:
+        stringResource.pickersContents.pickerRankContent.ranks[rankIndex],
     });
   }
 
@@ -94,29 +94,44 @@ class WelcomeScreen extends Component {
   };
 
   render() {
-    let divItems = stringResource.pickerDivContent.units.map((s, i) => {
-      return (
-        <Picker.Item
-          key={i}
-          value={`${stringResource.pickerDivContent.prefix}/${s}`}
-          label={`${stringResource.pickerDivContent.prefix}/${s}`}
-        />
-      );
-    });
+    // dropdown picker - division/unit selection
+    let divItems = stringResource.pickersContents.pickerDivContent.units.map(
+      (s, i) => {
+        return (
+          <Picker.Item
+            key={i}
+            value={`${
+              stringResource.pickersContents.pickerDivContent.prefix
+            }/${s}`}
+            label={`${
+              stringResource.pickersContents.pickerDivContent.prefix
+            }/${s}`}
+          />
+        );
+      },
+    );
 
-    let troopItems = stringResource.pickerDivContent.troops.map((s, i) => {
-      return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
-    });
+    // dropdown picker - troop selection
+    let troopItems = stringResource.pickersContents.pickerDivContent.troops.map(
+      (s, i) => {
+        return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
+      },
+    );
 
-    let rankItems = stringResource.pickerRankContent.ranks.map((s, i) => {
-      return (
-        <Picker.Item
-          key={i}
-          value={`${stringResource.pickerRankContent.allowance[i]}`}
-          label={`${s}`}
-        />
-      );
-    });
+    // dropdown picker - rank selection
+    let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
+      (s, i) => {
+        return (
+          <Picker.Item
+            key={i}
+            value={`${
+              stringResource.pickersContents.pickerRankContent.allowance[i]
+            }`}
+            label={`${s}`}
+          />
+        );
+      },
+    );
 
     return (
       <KeyboardAvoidingView
@@ -124,29 +139,36 @@ class WelcomeScreen extends Component {
         enabled
         keyboardVerticalOffset={-100}
         style={{flex: 1, flexDirection: 'column'}}>
+        {/* Main container */}
         <View style={commonStyles.container}>
+          {/* Header container */}
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>
-              {stringResource.welcomeHeader}
+              {stringResource.formHeaders.welcome_mainHeader}
             </Text>
           </View>
+          {/* Content container - name*/}
           <View style={styles.contentContainer}>
             <Text style={styles.contentHeader}>
-              {stringResource.welcomeContent[0].name}
+              {stringResource.formHeaders.welcome_sub_headers[0]}
             </Text>
             <TextInput
               style={styles.textInput}
-              placeholder={stringResource.welcomeContent[0].name}
+              placeholder={
+                stringResource.formHeaders.welcome_sub_placeholder[0]
+              }
               onChangeText={name => this.onNameChange(name)}
               ref={input => {
                 this.profileName = input;
               }}
             />
           </View>
+          {/* horizontal flex container */}
           <View style={styles.horizontalFlexContainer}>
+            {/* Content container - division/unit */}
             <View style={styles.contentContainer}>
               <Text style={styles.contentHeader}>
-                {stringResource.welcomeContent[1].name}
+                {stringResource.formHeaders.welcome_sub_headers[1]}
               </Text>
               <Picker
                 mode={'dropdown'}
@@ -156,9 +178,10 @@ class WelcomeScreen extends Component {
                 {divItems}
               </Picker>
             </View>
+            {/* Content container - troop */}
             <View style={styles.contentContainer}>
               <Text style={styles.contentHeader}>
-                {stringResource.welcomeContent[2].name}
+                {stringResource.formHeaders.welcome_sub_headers[2]}
               </Text>
               <Picker
                 mode={'dropdown'}
@@ -169,9 +192,10 @@ class WelcomeScreen extends Component {
               </Picker>
             </View>
           </View>
+          {/* Content container - rank */}
           <View style={styles.contentContainer}>
             <Text style={styles.contentHeader}>
-              {stringResource.welcomeContent[3].name}
+              {stringResource.formHeaders.welcome_sub_headers[3]}
             </Text>
             <Picker
               mode={'dropdown'}
@@ -183,18 +207,12 @@ class WelcomeScreen extends Component {
               {rankItems}
             </Picker>
           </View>
+          {/* button - continue */}
           <TouchableOpacity
             style={styles.buttonInput}
             onPress={() => this.onRegisterProfile()}>
             <Text style={styles.btnText}>
-              {stringResource.welcomeButtons[0]}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            // style={styles.buttonInput}
-            onPress={() => this.onRetrieveProfile()}>
-            <Text style={styles.btnText}>
-              {stringResource.welcomeButtons[0]}
+              {stringResource.formHeaders.welcome_buttons[0]}
             </Text>
           </TouchableOpacity>
         </View>

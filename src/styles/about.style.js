@@ -1,14 +1,18 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Constants} from 'react-native';
 
 const styles = StyleSheet.create({
   headerContainer: {
-    bottom: 50,
+    marginBottom: 30,
+  },
+  imageLogo: {
+    height: Dimensions.get('screen').width / 5.5,
+    resizeMode: 'contain',
   },
   contentContainer: {
     width: Dimensions.get('screen').width - 50,
   },
   contentSubContainer: {
-    marginBottom: 50,
+    marginBottom: 5,
     alignItems: 'center',
   },
   contentHowItWorkImg: {
@@ -16,15 +20,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   headerFontStyles: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   contentFontStyles: {
-    fontSize: 18,
+    fontSize: 14,
     textAlign: 'center',
-  },
-  innerSpacer: {
-    height: 20,
   },
   hyperlink: {
     fontWeight: 'normal',

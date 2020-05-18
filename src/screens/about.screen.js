@@ -19,7 +19,7 @@ class AboutScreen extends Component {
     return (
       <View style={commonStyles.container}>
         <View style={styles.headerContainer}>
-          <Image source={fullLogo} />
+          <Image style={styles.imageLogo} source={fullLogo} />
         </View>
         {/* disclaimer */}
         <View style={styles.contentContainer}>
@@ -38,7 +38,6 @@ class AboutScreen extends Component {
               style={styles.contentHowItWorkImg}
               source={howItWork_basic}
             />
-            <View style={styles.innerSpacer} />
             <Image style={styles.contentHowItWorkImg} source={howItWork_net} />
           </View>
           {/* application info */}
@@ -58,14 +57,18 @@ class AboutScreen extends Component {
               <Text
                 style={styles.hyperlink}
                 onPress={() =>
-                  Linking.openURL('https://github.com/khairmuhammad-ybh/NSPayslipComparer')
+                  Linking.openURL(
+                    'https://github.com/khairmuhammad-ybh/NSPayslipComparer',
+                  )
                 }>
                 {stringResource.aboutContent.applicationInfo.github}
               </Text>
             </Text>
             <Text style={[styles.contentFontStyles, {fontWeight: 'bold'}]}>
               Version:
-              <Text style={{fontWeight: "normal"}}>{stringResource.aboutContent.applicationInfo.version}</Text>
+              <Text style={{fontWeight: 'normal'}}>
+                {stringResource.aboutContent.applicationInfo.version}
+              </Text>
             </Text>
           </View>
         </View>
