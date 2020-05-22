@@ -138,83 +138,91 @@ class WelcomeScreen extends Component {
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         enabled
         keyboardVerticalOffset={-100}
-        style={{flex: 1, flexDirection: 'column'}}>
+        style={styles.keyboard}>
         {/* Main container */}
         <View style={commonStyles.container}>
-          {/* Header container */}
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>
+          {/* Top header */}
+          <View
+            style={styles.topContainer}>
+            <Text
+              style={styles.title}>
               {stringResource.formHeaders.welcome_mainHeader}
             </Text>
           </View>
-          {/* Content container - name*/}
-          <View style={styles.contentContainer}>
-            <Text style={styles.contentHeader}>
-              {stringResource.formHeaders.welcome_sub_headers[0]}
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder={
-                stringResource.formHeaders.welcome_sub_placeholder[0]
-              }
-              onChangeText={name => this.onNameChange(name)}
-              ref={input => {
-                this.profileName = input;
-              }}
-            />
-          </View>
-          {/* horizontal flex container */}
-          <View style={styles.horizontalFlexContainer}>
-            {/* Content container - division/unit */}
-            <View style={styles.contentContainer}>
-              <Text style={styles.contentHeader}>
-                {stringResource.formHeaders.welcome_sub_headers[1]}
+          {/* Middle content */}
+          <View
+            style={styles.middleContainer}>
+            {/* Input name */}
+            <View>
+              <Text style={styles.inputHeader}>
+                {stringResource.formHeaders.welcome_sub_headers[0]}
+              </Text>
+              <TextInput
+                style={styles.inputText}
+                placeholder={
+                  stringResource.formHeaders.welcome_sub_placeholder[0]
+                }
+                onChangeText={name => this.onNameChange(name)}
+                ref={input => {
+                  this.profileName = input;
+                }}
+              />
+            </View>
+            {/* Horizontal flex container */}
+            <View
+              style={styles.horizontalFlexContainer}>
+              {/* Content container - division/unit */}
+              <View style={styles.horizontalFlexSubContainer_one}>
+                <Text style={styles.inputHeader}>
+                  {stringResource.formHeaders.welcome_sub_headers[1]}
+                </Text>
+                <Picker
+                  mode={'dropdown'}
+                  style={styles.picker}
+                  selectedValue={this.state.divSelected}
+                  onValueChange={this.onDivValueChange.bind(this)}>
+                  {divItems}
+                </Picker>
+              </View>
+              {/* Content container - troop */}
+              <View style={styles.horizontalFlexSubContainer_two}>
+                <Text style={styles.inputHeader}>
+                  {stringResource.formHeaders.welcome_sub_headers[2]}
+                </Text>
+                <Picker
+                  mode={'dropdown'}
+                  style={styles.picker}
+                  selectedValue={this.state.troopSelected}
+                  onValueChange={this.onTroopValueChange.bind(this)}>
+                  {troopItems}
+                </Picker>
+              </View>
+            </View>
+            {/* Rank */}
+            <View>
+              <Text style={styles.inputHeader}>
+                {stringResource.formHeaders.welcome_sub_headers[3]}
               </Text>
               <Picker
                 mode={'dropdown'}
-                style={styles.dropdownInput}
-                selectedValue={this.state.divSelected}
-                onValueChange={this.onDivValueChange.bind(this)}>
-                {divItems}
+                style={styles.dropdown}
+                selectedValue={this.state.rankPaySelected}
+                onValueChange={(rankValue, rankIndex) =>
+                  this.onRankValueChange(rankValue, rankIndex)
+                }>
+                {rankItems}
               </Picker>
             </View>
-            {/* Content container - troop */}
-            <View style={styles.contentContainer}>
-              <Text style={styles.contentHeader}>
-                {stringResource.formHeaders.welcome_sub_headers[2]}
+            {/* Register profile button */}
+            {/* button - continue */}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.onRegisterProfile()}>
+              <Text style={styles.btnText}>
+                {stringResource.formHeaders.welcome_buttons[0]}
               </Text>
-              <Picker
-                mode={'dropdown'}
-                style={styles.dropdownInput}
-                selectedValue={this.state.troopSelected}
-                onValueChange={this.onTroopValueChange.bind(this)}>
-                {troopItems}
-              </Picker>
-            </View>
+            </TouchableOpacity>
           </View>
-          {/* Content container - rank */}
-          <View style={styles.contentContainer}>
-            <Text style={styles.contentHeader}>
-              {stringResource.formHeaders.welcome_sub_headers[3]}
-            </Text>
-            <Picker
-              mode={'dropdown'}
-              style={styles.textInput}
-              selectedValue={this.state.rankPaySelected}
-              onValueChange={(rankValue, rankIndex) =>
-                this.onRankValueChange(rankValue, rankIndex)
-              }>
-              {rankItems}
-            </Picker>
-          </View>
-          {/* button - continue */}
-          <TouchableOpacity
-            style={styles.buttonInput}
-            onPress={() => this.onRegisterProfile()}>
-            <Text style={styles.btnText}>
-              {stringResource.formHeaders.welcome_buttons[0]}
-            </Text>
-          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     );

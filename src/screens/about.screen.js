@@ -17,45 +17,47 @@ import howItWork_net from '../assets/how_it_work_two.png';
 class AboutScreen extends Component {
   render() {
     return (
-      <View style={commonStyles.container}>
-        <View style={styles.headerContainer}>
-          <Image style={styles.imageLogo} source={fullLogo} />
+      <View style={[commonStyles.container, styles.aboutMainContainer]}>
+        {/* Header */}
+        <View style={styles.topContainer}>
+          <Image style={styles.Img} source={fullLogo} />
         </View>
-        {/* disclaimer */}
-        <View style={styles.contentContainer}>
-          <View style={styles.contentSubContainer}>
-            <Text style={styles.headerFontStyles}>
+        {/* Middle container */}
+        <View style={styles.middleContainer}>
+          <View>
+            <Text style={styles.title}>
               {stringResource.aboutContent.disclaimer.title}
             </Text>
-            <Text style={styles.contentFontStyles}>
+            <Text style={styles.content}>
               {stringResource.aboutContent.disclaimer.content}
             </Text>
           </View>
           {/* how it works */}
-          <View style={styles.contentSubContainer}>
-            <Text style={styles.headerFontStyles}>How to calculate</Text>
-            <Image
-              style={styles.contentHowItWorkImg}
-              source={howItWork_basic}
-            />
-            <Image style={styles.contentHowItWorkImg} source={howItWork_net} />
+          <View>
+            <Text style={styles.title}>How to calculate</Text>
+            <Image style={styles.Img} source={howItWork_basic} />
+            <Image style={styles.Img} source={howItWork_net} />
           </View>
-          {/* application info */}
-          <View style={styles.contentSubContainer}>
-            <Text style={[styles.contentFontStyles, {fontWeight: 'bold'}]}>
+        </View>
+        {/* Footer container */}
+        <View style={styles.footerContainer}>
+          <View>
+            {/* developed by */}
+            <Text style={styles.footerTitle}>
               Developed by:{' '}
               <Text
-                style={styles.hyperlink}
+                style={styles.footerLink}
                 onPress={() =>
                   Linking.openURL('https://github.com/khairmuhammad-ybh')
                 }>
                 {stringResource.aboutContent.applicationInfo.developer}
               </Text>
             </Text>
-            <Text style={[styles.contentFontStyles, {fontWeight: 'bold'}]}>
+            {/* project on github */}
+            <Text style={styles.footerTitle}>
               Project on Github:{' '}
               <Text
-                style={styles.hyperlink}
+                style={styles.footerLink}
                 onPress={() =>
                   Linking.openURL(
                     'https://github.com/khairmuhammad-ybh/NSPayslipComparer',
@@ -64,9 +66,10 @@ class AboutScreen extends Component {
                 {stringResource.aboutContent.applicationInfo.github}
               </Text>
             </Text>
-            <Text style={[styles.contentFontStyles, {fontWeight: 'bold'}]}>
+            {/* Version number */}
+            <Text style={styles.footerTitle}>
               Version:
-              <Text style={{fontWeight: 'normal'}}>
+              <Text style={styles.footerNormalText}>
                 {stringResource.aboutContent.applicationInfo.version}
               </Text>
             </Text>

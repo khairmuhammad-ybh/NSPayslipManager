@@ -17,7 +17,9 @@ import {Picker} from '@react-native-community/picker';
 // resources
 import stringResource from '../resources/string.resource';
 
-// TODO: code cleanup
+// service
+import * as service from '../services/manualpayslip.service';
+
 class ManualPayslipScreen extends Component {
   constructor(props) {
     super(props);
@@ -67,16 +69,35 @@ class ManualPayslipScreen extends Component {
     });
   }
 
-  onRegisterProfile = () => {
-    let user = {
-      rank: {
-        rankName: this.state.rankNameSelected,
-        rankPay: this.state.rankPaySelected,
-      },
-      monthSelected: this.state.monthSelected,
+  onCalculatePaylip = () => {
+    let data = {
+      rank: this.state.rankPaySelected,
+      month: this.state.monthSelected,
+      mealAllowance: this.state.MealAmount,
       deductionAmount: this.state.deductionAmount,
       claimAmount: this.state.claimAmount,
     };
+
+    service
+      .calculatePayslip(data)
+      .then(resp => {
+        console.log('calculated');
+        this.props.navigation.goBack();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  onClearPaylip = () => {
+    service
+      .clearAllPayslip()
+      .then(resp => {
+        console.log(resp);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -105,24 +126,27 @@ class ManualPayslipScreen extends Component {
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         enabled
         keyboardVerticalOffset={-100}
-        style={{flex: 1, flexDirection: 'column'}}>
+        style={styles.keyboard}>
         <View style={commonStyles.container}>
-          {/* Header */}
-          <View style={styles.contentHeader}>
-            <Text style={styles.headerText}>
-              {stringResource.formHeaders.manual_mainHeader}
-            </Text>
+          {/* Top header */}
+          <View style={styles.topContainer}>
+            <View>
+              <Text style={styles.title}>
+                {stringResource.formHeaders.manual_mainHeader}
+              </Text>
+            </View>
           </View>
-          <View style={styles.contentContainer}>
-            <View style={styles.horizontalFlexContainer}>
+          {/* Middle content */}
+          <View style={styles.middleContainer}>
+            <View style={styles.horizontalFlexContainer_one}>
               {/* Rank section */}
-              <View style={styles.contentContainer}>
-                <Text style={styles.contentHeader}>
+              <View style={styles.horizontalFlexSubContainer_one}>
+                <Text style={styles.inputHeader}>
                   {stringResource.formHeaders.manual_sub_headers[0]}
                 </Text>
                 <Picker
                   mode={'dropdown'}
-                  style={styles.dropdownInput}
+                  style={styles.picker}
                   selectedValue={this.state.rankPaySelected}
                   onValueChange={(rankValue, rankIndex) =>
                     this.onRankValueChange(rankValue, rankIndex)
@@ -131,13 +155,13 @@ class ManualPayslipScreen extends Component {
                 </Picker>
               </View>
               {/* Month section */}
-              <View style={styles.contentContainer}>
-                <Text style={styles.contentHeader}>
+              <View style={styles.horizontalFlexSubContainer_two}>
+                <Text style={styles.inputHeader}>
                   {stringResource.formHeaders.manual_sub_headers[1]}
                 </Text>
                 <Picker
                   mode={'dropdown'}
-                  style={styles.dropdownInput}
+                  style={styles.picker}
                   selectedValue={this.state.monthSelected}
                   onValueChange={this.onMonthValueChange.bind(this)}>
                   {monthItems}
@@ -145,49 +169,47 @@ class ManualPayslipScreen extends Component {
               </View>
             </View>
             {/* Meal allowance section */}
-            <Text style={styles.contentHeader}>
-              {stringResource.formHeaders.manual_sub_headers[2]}
-            </Text>
-            <View style={styles.horizontalFlexContainer}>
-              <View style={[styles.manualMealContent, {flex: 2}]}>
-                <TextInput
-                  keyboardType={'number-pad'}
-                  placeholder={
-                    stringResource.formHeaders.manual_sub_placeholder[2]
-                  }
-                  onChangeText={name => this.onMealValueChange(name)}
-                  ref={input => {
-                    this.profileName = input;
-                  }}
-                />
-              </View>
-              <View style={[styles.manualOperatorContainer]}>
-                <Text>X</Text>
-              </View>
-              <View
-                style={[
-                  styles.manualMealContent,
-                  styles.manualOperatorContainer,
-                ]}>
-                <Text>5</Text>
-              </View>
-              <View style={[styles.manualOperatorContainer]}>
-                <Text>=</Text>
-              </View>
-              <View
-                style={[
-                  styles.manualMealContent,
-                  styles.manualOperatorContainer,
-                ]}>
-                <Text>{this.state.MealAmount}</Text>
+            <View>
+              <Text style={styles.inputHeader}>
+                {stringResource.formHeaders.manual_sub_headers[2]}
+              </Text>
+              <View style={styles.horizontalFlexContainer_two}>
+                <View style={styles.inputText}>
+                  <TextInput
+                    keyboardType={'number-pad'}
+                    placeholder={
+                      stringResource.formHeaders.manual_sub_placeholder[2]
+                    }
+                    onChangeText={name => this.onMealValueChange(name)}
+                    ref={input => {
+                      this.meal = input;
+                    }}
+                  />
+                </View>
+                {/* operator */}
+                <View style={styles.operator}>
+                  <Text>X</Text>
+                </View>
+                {/* multiplier */}
+                <View style={styles.inputLabelAndOrComputation}>
+                  <Text>5</Text>
+                </View>
+                {/* operator */}
+                <View style={styles.operator}>
+                  <Text>=</Text>
+                </View>
+                {/* computation */}
+                <View style={styles.inputLabelAndOrComputation}>
+                  <Text>{this.state.MealAmount}</Text>
+                </View>
               </View>
             </View>
             {/* Deduction section */}
-            <View style={styles.contentContainer}>
-              <Text style={styles.contentHeader}>
+            <View>
+              <Text style={styles.inputHeader}>
                 {stringResource.formHeaders.manual_sub_headers[3]}
               </Text>
-              <View style={styles.textInput}>
+              <View style={styles.inputFullText}>
                 <TextInput
                   keyboardType={'numeric'}
                   placeholder={
@@ -195,17 +217,17 @@ class ManualPayslipScreen extends Component {
                   }
                   onChangeText={name => this.onDeductionValueChange(name)}
                   ref={input => {
-                    this.profileName = input;
+                    this.deduction = input;
                   }}
                 />
               </View>
             </View>
             {/* Claim/others section */}
-            <View style={styles.contentContainer}>
-              <Text style={styles.contentHeader}>
+            <View>
+              <Text style={styles.inputHeader}>
                 {stringResource.formHeaders.manual_sub_headers[4]}
               </Text>
-              <View style={styles.textInput}>
+              <View style={styles.inputFullText}>
                 <TextInput
                   keyboardType={'numeric'}
                   placeholder={
@@ -213,21 +235,26 @@ class ManualPayslipScreen extends Component {
                   }
                   onChangeText={name => this.onClaimValueChange(name)}
                   ref={input => {
-                    this.profileName = input;
+                    this.claim = input;
                   }}
                 />
               </View>
             </View>
-          </View>
-          {/* button - calculate payslip */}
-          <View style={styles.contentContainer}>
-            <TouchableOpacity
-              style={styles.buttonInput}
-              onPress={() => console.log('calcualte payslip')}>
-              <Text style={styles.btnText}>
-                {stringResource.formHeaders.manual_buttons[0]}
-              </Text>
+            {/* button - calculate payslip */}
+            <View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.onCalculatePaylip()}>
+                <Text style={styles.btnText}>
+                  {stringResource.formHeaders.manual_buttons[0]}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.onClearPaylip()}>
+              <Text style={styles.btnText}>Clear all Payslips</Text>
             </TouchableOpacity>
+            </View>
           </View>
         </View>
       </KeyboardAvoidingView>

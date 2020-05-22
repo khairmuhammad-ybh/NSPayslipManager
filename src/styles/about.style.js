@@ -1,36 +1,37 @@
 import {StyleSheet, Dimensions, Constants} from 'react-native';
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    marginBottom: 30,
+  aboutMainContainer: {
+    flex: 1,
+    flexDirection: 'column',
   },
-  imageLogo: {
-    height: Dimensions.get('screen').width / 5.5,
-    resizeMode: 'contain',
-  },
-  contentContainer: {
-    width: Dimensions.get('screen').width - 50,
-  },
-  contentSubContainer: {
-    marginBottom: 5,
+  topContainer: {
+    flex: 1,
+    width: Dimensions.get('screen').width - 30,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  contentHowItWorkImg: {
-    width: Dimensions.get('screen').width - 50,
+  middleContainer: {
+    flex: 4,
+    width: Dimensions.get('screen').width - 30,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  footerContainer: {
+    flex: 1,
+    width: Dimensions.get('screen').width - 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {fontSize: 24, fontWeight: 'bold', textAlign: 'center'},
+  content: {fontSize: 18, textAlign: 'center'},
+  Img: {
+    width: Dimensions.get('screen').width - 30,
     resizeMode: 'contain',
   },
-  headerFontStyles: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  contentFontStyles: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  hyperlink: {
-    fontWeight: 'normal',
-    color: '#0000EE',
-  },
+  footerTitle: {fontSize: 18, textAlign: 'center', fontWeight: 'bold'},
+  footerLink: {fontWeight: 'normal', color: '#0000EE'},
+  footerNormalText: {fontWeight: 'normal'},
 });
 
 export default styles;

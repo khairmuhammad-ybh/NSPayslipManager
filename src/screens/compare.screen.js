@@ -8,7 +8,7 @@ class CompareScreen extends PureComponent {
   render() {
     return (
       <View style={commonStyles.container}>
-        <Text>CompareScreen</Text>
+        <Text>Pending Development</Text>
       </View>
     );
   }

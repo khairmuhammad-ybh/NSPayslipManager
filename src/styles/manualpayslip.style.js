@@ -1,53 +1,46 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
 const styles = StyleSheet.create({
-  headerText: {
-    fontSize: 36,
-    fontFamily: 'Bree Serif',
-    fontStyle: 'normal',
-    textAlign: 'center',
+  topContainer: {
+    flex: 1,
+    width: Dimensions.get('screen').width,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  contentHeader: {
-    fontSize: 18,
-    margin: 5,
+  middleContainer: {
+    flex: 6.5,
+    width: Dimensions.get('screen').width,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
-  manualMealHeader: {
-    width: Dimensions.get('screen').width - 50,
+  horizontalFlexContainer_one: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: Dimensions.get('screen').width - 30,
   },
-  contentContainer: {
-    marginBottom: 5,
-  },
-  textInput: {
-    height: 48,
-    margin: 10,
-    borderColor: '#000',
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderWidth: 1.5,
-    width: Dimensions.get('screen').width - 50,
-  },
-  horizontalFlexContainer: {
+  horizontalFlexContainer_two: {
     width: Dimensions.get('screen').width - 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  dropdownInput: {
+  horizontalFlexSubContainer_one: {flex: 1},
+  horizontalFlexSubContainer_two: {flex: 0.7},
+  title: {
+    fontSize: 36,
+    fontStyle: 'normal',
+    textAlign: 'center',
+  },
+  picker: {
     margin: 10,
     padding: 8,
     borderColor: '#000',
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 1.5,
-    width: Dimensions.get('screen').width / 2 - 45,
   },
-  manualOperatorContainer: {
-    height: 48,
-    margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  manualMealContent: {
+  inputHeader: {fontSize: 24, marginStart: 10},
+  keyboard: {flex: 1, flexDirection: 'column'},
+  inputText: {
     height: 48,
     margin: 10,
     borderColor: '#000',
@@ -55,20 +48,45 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1.5,
     width: Dimensions.get('screen').width / 3 - 80,
+    flex: 2,
   },
-  manualText: {
-    padding: 12,
+  operator: {
+    height: 48,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
-  manualOperator: {},
-  buttonInput: {
+  inputLabelAndOrComputation: {
+    height: 48,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width / 3 - 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  inputFullText: {
+    height: 48,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width - 30,
+  },
+  button: {
     padding: 12,
     borderColor: '#708CB5',
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 3,
     alignItems: 'center',
-    
-  }
+    width: '50%',
+  },
 });
 
 export default styles;
