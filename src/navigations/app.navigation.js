@@ -4,7 +4,7 @@ import {View, TouchableOpacity, Text} from 'react-native';
 
 // screens
 import HomeScreen from '../screens/home.screen';
-import OcrCompareScreen from '../screens/ocrcompare.screen';
+// import OcrCompareScreen from '../screens/deprecated/ocrcompare.screen';
 import ManualPayslipScreen from '../screens/manualpayslip.screen';
 import AboutScreen from '../screens/about.screen';
 
@@ -47,7 +47,7 @@ function AppStack() {
         }}
       />
       <Stack.Screen name="ManualPayslip" component={ManualPayslipScreen} />
-      <Stack.Screen name="OcrCompare" component={OcrCompareScreen} />
+      {/* <Stack.Screen name="OcrCompare" component={OcrCompareScreen} /> */}
       <Stack.Screen name="About" component={AboutScreen} />
     </Stack.Navigator>
   );

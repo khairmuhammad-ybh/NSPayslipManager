@@ -5,10 +5,12 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ActionSheetIOS
 } from 'react-native';
 
 // components
 import {Picker} from '@react-native-community/picker';
+import IOSPicker from 'react-native-ios-picker';
 
 // styles
 import styles from '../styles/welcome.style';
@@ -24,10 +26,10 @@ class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      divSelected: 'key1',
-      troopSelected: 'key2',
-      rankNameSelected: 'SC2',
-      rankPaySelected: '600',
+      divSelected: 'Procom/Alpha',
+      troopSelected: 'Alpha',
+      rankNameSelected: 'SC2', // SC2
+      rankPaySelected: '600', // 600
       name: '',
     };
   }
@@ -38,10 +40,58 @@ class WelcomeScreen extends Component {
     });
   }
 
+  onDivValueChangeIOS() {
+    let divItems = stringResource.pickersContents.pickerDivContent.units.map(
+      (s) => {
+        return (
+          `${stringResource.pickersContents.pickerDivContent.prefix}/${s}`
+        );
+      },
+    );
+
+    divItems.push("Cancel")
+
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options : divItems,
+        cancelButtonIndex: divItems.length - 1
+      },
+      buttonIndex => {
+        this.setState({
+          divSelected: `${stringResource.pickersContents.pickerDivContent.prefix}/${stringResource.pickersContents.pickerDivContent.units[buttonIndex]}`,
+        });
+      }
+    )
+    
+  }
+
   onTroopValueChange(value) {
     this.setState({
       troopSelected: value,
     });
+  }
+
+  onTroopValueChangeIOS() {
+    let troopItems = stringResource.pickersContents.pickerDivContent.troops.map(
+      (s) => {
+        return s;
+      },
+    );
+    troopItems.push("Cancel")
+    
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options : troopItems,
+        cancelButtonIndex: troopItems.length - 1
+      },
+      buttonIndex => {
+        this.setState({
+          troopSelected: stringResource.pickersContents.pickerDivContent.troops[buttonIndex],
+        });
+      }
+    )
+
+
   }
 
   onRankValueChange(rankValue, rankIndex) {
@@ -50,6 +100,31 @@ class WelcomeScreen extends Component {
       rankNameSelected:
         stringResource.pickersContents.pickerRankContent.ranks[rankIndex],
     });
+  }
+
+  onRankValueChangeIOS() {
+    let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
+      (s, i) => {
+        return (
+          s
+        );
+      },
+    );
+    rankItems.push("Cancel")
+
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options : rankItems,
+        cancelButtonIndex: rankItems.length - 1
+      },
+      buttonIndex => {
+        this.setState({
+          rankPaySelected: stringResource.pickersContents.pickerRankContent.allowance[buttonIndex],
+          rankNameSelected:
+            stringResource.pickersContents.pickerRankContent.ranks[buttonIndex],
+        });
+      }
+    )
   }
 
   onNameChange = value => {
@@ -69,16 +144,17 @@ class WelcomeScreen extends Component {
       troop: this.state.troopSelected,
     };
 
-    // console.log(user);
-    service
-      .createProfile(user)
-      .then(userProfile => {
-        console.log('user profile created');
-        console.log(userProfile);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    console.log(user);
+    // TODO: do a check for name field (NOT SUPPOSED TO BE NULL/EMPTY)
+    // service
+    //   .createProfile(user)
+    //   .then(userProfile => {
+    //     console.log('user profile created');
+    //     console.log(userProfile);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
 
   onRetrieveProfile = () => {
@@ -176,19 +252,36 @@ class WelcomeScreen extends Component {
                 <Text style={styles.inputHeader}>
                   {stringResource.formHeaders.welcome_sub_headers[1]}
                 </Text>
+                {Platform.OS == 'ios' ? 
+                <TouchableOpacity style={styles.picker}  onPress={() => this.onDivValueChangeIOS()}>
+                  <Text>
+                    {
+                    this.state.divSelected ? 
+                    `${this.state.divSelected}` : 
+                    null
+                    }
+                  </Text>
+                  </TouchableOpacity> : 
                 <Picker
                   mode={'dropdown'}
                   style={styles.picker}
                   selectedValue={this.state.divSelected}
                   onValueChange={this.onDivValueChange.bind(this)}>
                   {divItems}
-                </Picker>
+                </Picker>}
+                
               </View>
               {/* Content container - troop */}
               <View style={styles.horizontalFlexSubContainer_two}>
                 <Text style={styles.inputHeader}>
                   {stringResource.formHeaders.welcome_sub_headers[2]}
                 </Text>
+                {Platform.OS == 'ios' ? 
+                <TouchableOpacity style={styles.picker}  onPress={() => this.onTroopValueChangeIOS()}>
+                  <Text>
+                    {this.state.troopSelected}
+                  </Text>
+                </TouchableOpacity> : 
                 <Picker
                   mode={'dropdown'}
                   style={styles.picker}
@@ -196,6 +289,7 @@ class WelcomeScreen extends Component {
                   onValueChange={this.onTroopValueChange.bind(this)}>
                   {troopItems}
                 </Picker>
+                }
               </View>
             </View>
             {/* Rank */}
@@ -203,6 +297,12 @@ class WelcomeScreen extends Component {
               <Text style={styles.inputHeader}>
                 {stringResource.formHeaders.welcome_sub_headers[3]}
               </Text>
+              {Platform.OS == 'ios' ? 
+              <TouchableOpacity style={styles.dropdown}  onPress={() => this.onRankValueChangeIOS()}>
+                <Text>
+                  {this.state.rankNameSelected}
+                </Text>
+              </TouchableOpacity> : 
               <Picker
                 mode={'dropdown'}
                 style={styles.dropdown}
@@ -212,6 +312,8 @@ class WelcomeScreen extends Component {
                 }>
                 {rankItems}
               </Picker>
+              }
+              
             </View>
             {/* Register profile button */}
             {/* button - continue */}
