@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'NSPayslipManager' do
-  # Pods for NSPayslipManager
+target 'NsPayslipManager' do
+  # Pods for NsPayslipManager
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -78,7 +78,7 @@ target 'NSPayslipManager' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  target 'NSPayslipManagerTests' do
+  target 'NsPayslipManagerTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -95,10 +95,10 @@ target 'NSPayslipManager' do
   end
 end
 
-target 'NSPayslipManager-tvOS' do
-  # Pods for NSPayslipManager-tvOS
+target 'NsPayslipManager-tvOS' do
+  # Pods for NsPayslipManager-tvOS
 
-  target 'NSPayslipManager-tvOSTests' do
+  target 'NsPayslipManager-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

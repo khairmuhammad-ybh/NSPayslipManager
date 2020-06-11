@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.nocorp.nspsm"
+        applicationId "com.nocorp.nspayslipmanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -191,6 +191,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-vector-icons') // From node_modues (react-native-elements)
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
@@ -223,3 +224,12 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+project.ext.vectoricons = [
+    iconFontNames: [ 'AntDesign.ttf', 'Entypo.ttf', 'EvilIcons.ttf', 'Feather.ttf',
+        'FontAwersome.ttf', 'FontAwesome5_Brans.ttf', 'FontAwesome5_Regular.ttf', 
+        'FontAwesome5_solid.ttf', 'Fontisto.ttf', 'Foundation.ttf', 'MaterialCommunityIcons.ttf',
+        'MaterialIcons.ttf', 'Octicons.ttf', 'SimpleLineIcons.ttf', 'Zocial.ttf'] // Name of the font files you want to copy
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

@@ -1,2 +1,3 @@
-export * from './nspayslipcomparer.actions';
-export * from './manualpayslip.actions';
+export * from './nspayslipmanager.action';
+export * from './profle.action';
+export * from './payslip.action';

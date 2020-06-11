@@ -1,41 +1,51 @@
 const stringResource = {
+  applicationInfo: {
+    applicationName: 'NSPayslipsManager',
+    developer: 'Muhammad Khairi',
+    github: 'NSPayslipManager@Github',
+    version: '1.0',
+  },
   aboutContent: {
     disclaimer: {
       title: 'DISCLAIMER',
-      content:
-        'This application were developed to help remove the complication of calculating your payslip manually, and a one stop solution to keep track of your payslips',
-    },
-    applicationInfo: {
-      developer: 'Muhammad Khairi',
-      github: 'NSPayslipComparer@Github',
-      version: '1.0',
-    },
+      content: 'This application were developed to help remove the complication of calculating your payslip manually, and a one stop solution to keep track of your payslips',
+    },    
   },
   // New format
   formHeaders: {
     // Welcome screen
-    welcome_mainHeader: 'Welcome, please introduce yourself',
-    welcome_sub_headers: ['Name', 'Division/Unit', 'Troop', 'Rank'],
-    welcome_sub_placeholder: ['Name', '', '', '', ''],
-    welcome_buttons: ['Continue'],
-    // ManualPayslip screen
-    manual_mainHeader: 'Please enter details for your payslip',
-    manual_sub_headers: [
-      'Rank',
+    welcome_mainHeaders: ['Welcome, please introduce yourself', 'Please specify fixed deduction if any'],
+    welcome_sub_headers: ['Name', 'Division/Unit', 'Troop', 'Vocation','Rank'],
+    welcome_sub_placeholder: ['Name', '', '', '', '', ''],
+    welcome_buttons: ['Continue', 'Register Profile'],
+    welcome_otherHeader: ['Deduction (if applicable)'],
+    // Payslip screen
+    payslip_mainHeader: ['Please enter details for your payslip', 'Expected total meal allowance'],
+    payslip_subHeaders: [
       'Month',
-      'Meal Allowance(Unit)',
-      'Deduction (if application)',
-      'Claim/others (if any)',
+      'Total Rank Pay',
+      'Total Meal Allowance',
+      'Total Deductions',
+      'Total Claim/others',
+      'Total Expected Meal Allowance'
     ],
-    manual_sub_placeholder: ['', '', 'No. of units', 'Total amount deduction', 'Total amount claim/others'],
-    manual_buttons: ['Calculate payslip'],
-    other_buttons: ['Reset'],
+    payslip_subPlaceholder: [
+      '', 
+      'Total amount rank pay', 
+      'Total amount meal allowance', 
+      'Total amount deductions', 
+      'Total amount claim/others', 
+      'Total expected meal allowance'],
+    payslip_buttons: ['Continue', 'Calculate Payslip']
   },
   pickersContents: {
     pickerDivContent: {
       prefix: 'Procom',
       units: ['Alpha', 'Bravo', 'Charlie'],
       troops: ['Alpha', 'Bravo', 'Charlie', 'Delta'],
+    },
+    pickerVocationContent: {
+      vocations: ['SLP', 'IRT', 'POI']
     },
     pickerRankContent: {
       ranks: ['SC2', 'CPL', 'SGT(1)', 'SGT(2)', 'NSPI', 'NSI'],
@@ -57,5 +67,6 @@ const stringResource = {
     ],
   },
 };
-
-export default stringResource;
+  
+  export default stringResource;
+  

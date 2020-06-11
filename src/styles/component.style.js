@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginEnd: 5,
   },
+  cardOfTheMonth: {
+    flex: 2,
+  },
   cardContentContainer: {
     marginTop: 15,
     alignSelf: 'center',
@@ -27,11 +30,27 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  valueContainer: {
+  valueContainerEnd: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-end',
   },
+  valueContainerMid: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: 'center',
+  },
+  flexContainerRow: {
+    flex: 1, 
+    flexDirection: 'row',
+  },
+  innerFlexRow1: {
+    flex: 1,
+  },
+  innerFlexRow2: {
+    flex: 2, 
+    alignItems: 'center',
+  }
 });
 
 export default styles;

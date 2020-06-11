@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface NSPayslipManagerTests : XCTestCase
+@interface NsPayslipManagerTests : XCTestCase
 
 @end
 
-@implementation NSPayslipManagerTests
+@implementation NsPayslipManagerTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
