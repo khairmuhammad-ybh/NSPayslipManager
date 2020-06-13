@@ -5,6 +5,7 @@ import {
     payslipSchema,
     dateSchema,
     payslipComparedSchema,
+    payslipRankDiffSchema,
     payslipDiffSchema,
 } from './dbmodel.datasource';
 
@@ -28,6 +29,6 @@ export const payslipDbOptions = {
 
 export const payslipComparedDbOptions = {
     path: 'payslipComparedDb.realm',
-    schema: [payslipComparedSchema, payslipDiffSchema, dateSchema],
+    schema: [payslipComparedSchema, payslipRankDiffSchema, payslipDiffSchema, dateSchema],
     schemaVersion: 0, // optional
 }

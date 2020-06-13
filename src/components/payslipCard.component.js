@@ -79,7 +79,7 @@ class PayslipCard extends Component {
                                 style={styles.labelContainer}>
                                 {/* label */}
                                 <Text style={[styles.cardDetailsText, styles.cardOfTheMonth]}>{payslip.date.month} {payslip.date.year} </Text>
-                                <Text style={styles.cardDetailsText}>Rank: {store.getState().Profile.rank} </Text>
+                                <Text style={styles.cardDetailsText}>Rank: {payslip.rank.rankName} </Text>
                                 <Text style={styles.cardDetailsText}>Meal: </Text>
                                 <Text style={styles.cardDetailsText}>Claim/Others: </Text>
                                 <Text style={styles.cardDetailsText}>Net Salary: </Text>

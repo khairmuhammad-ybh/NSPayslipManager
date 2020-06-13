@@ -1,6 +1,7 @@
 import Realm from 'realm';
 import { profileDbOptions } from './dbconfig.datasource';
 import { profileSchema, rankSchema } from './dbmodel.datasource';
+import { retrieveProfile } from '../services/profile.service';
 
 export const registerProfile = newProfile => {
     return new Promise((resolve, reject) => {
@@ -33,6 +34,33 @@ export const retrieveUserProfile = () => {
         .catch(err => reject(err));
         
     });
+};
+
+export const updateProfile = (updateProfile) => {
+  return new Promise((resolve, reject) => {
+      Realm.open(profileDbOptions)
+          .then(realm => {
+              let payslipTemplates = realm.objects(profileSchema.name);
+              if (payslipTemplates > 0) {
+                  reject('profile has been added');
+              }
+              // modified payslip template in database
+              realm.write(() => {
+                  realm.create(profileSchema.name, updateProfile, 'modified');
+              });
+              realm.close();
+              retrieveUserProfile()
+              .then(resp => {
+                  resolve(resp);
+              })
+              .catch(err => {
+                  reject(err)
+              })
+          })
+          .catch(err => {
+              reject(err);
+          });
+  });
 };
 
 export const deleteAllProfile = () => {

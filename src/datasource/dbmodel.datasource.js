@@ -71,7 +71,7 @@ export const payslipComparedSchema = {
     properties: {
         _id: 'string',
         date: {type: 'Date'},
-        rank: {type: 'PayslipDiff'},
+        rank: {type: 'PayslipRankDiff'},
         mealAllowance: {type: 'PayslipDiff'},
         claimAndOthers: {type: 'PayslipDiff'},
         netSalary: {type: 'PayslipDiff'},
@@ -88,4 +88,12 @@ export const payslipDiffSchema = {
         actual: 'string',
     },
 };
-  
+
+export const payslipRankDiffSchema = {
+    name: 'PayslipRankDiff',
+    properties: {
+        rankName: 'string',
+        expected: 'string',
+        actual: 'string',
+    },
+};

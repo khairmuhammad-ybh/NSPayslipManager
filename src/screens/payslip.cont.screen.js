@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { 
+import {
     View,
     Text,
     KeyboardAvoidingView,
     TextInput,
     TouchableOpacity,
-    ActionSheetIOS
+    ActionSheetIOS,
+    Alert
 } from 'react-native';
 // styles
 import commonStyles from '../styles/common.style';
@@ -19,37 +20,40 @@ class PayslipContScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mealAmount: ''
+            mealAmount: 0
         }
     }
 
-    onMealAmountChange(value){
+    onMealAmountChange(value) {
         this.setState({
             mealAmount: value
         })
     }
 
-    onCalculatePayslip(){
+    onCalculatePayslip() {
         const data = this.props.route.params
-        // console.log(`calculate payslip: ${this.state.mealAmount}`)
-        // console.log(data)
-        // this.props.navigation.navigate('Home')
-      
-        // recalculate payslip template
-        servicePayslip.recalculatePayslipTemplate({mealAllowance: this.state.mealAmount}).then(resp => {
+
+        if (this.state.mealAmount == 0) {
+            Alert.alert("Incomplete field", "Please fill up the field provided")
+        } else {
+            // recalculate payslip template
+            servicePayslip.recalculatePayslipTemplate({ mealAllowance: this.state.mealAmount }, 'add').then(resp => {
                 let expectedPayslip = resp
                 // console.log(data)
                 // calculate payslip
                 servicePayslip.calculatePayslip(data, expectedPayslip).then(resp => {
-                        this.props.navigation.navigate('Home')
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                    this.props.navigation.navigate('Home')
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             })
             .catch(err => {
                 console.log(err)
             })
+        }
+
+
     }
 
     render() {
@@ -75,14 +79,14 @@ class PayslipContScreen extends Component {
                         {/* Input name */}
                         <View>
                             <Text style={styles.inputHeader}>
-                            {stringResource.formHeaders.payslip_subHeaders[5]}
+                                {stringResource.formHeaders.payslip_subHeaders[5]}
                             </Text>
                             <TextInput
-                            style={styles.inputText}
-                            placeholder={
-                                `Total ${stringResource.formHeaders.payslip_subHeaders[5].toLowerCase()}`
-                            }
-                            onChangeText={mealAmount => this.onMealAmountChange(mealAmount)}
+                                style={styles.inputText}
+                                placeholder={
+                                    `Total ${stringResource.formHeaders.payslip_subHeaders[5].toLowerCase()}`
+                                }
+                                onChangeText={mealAmount => this.onMealAmountChange(mealAmount)}
                             />
                         </View>
                         {/* Register profile button */}

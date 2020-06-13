@@ -18,7 +18,12 @@ const stringResource = {
     welcome_sub_headers: ['Name', 'Division/Unit', 'Troop', 'Vocation','Rank'],
     welcome_sub_placeholder: ['Name', '', '', '', '', ''],
     welcome_buttons: ['Continue', 'Register Profile'],
-    welcome_otherHeader: ['Deduction (if applicable)'],
+    welcome_otherHeaders: ['Deduction (if applicable)'],
+    welcome_otherPlaceholders: ['Total deduction'],
+    // Profile screen
+    profile_mainHeaders: ['Update My Profile'],
+    profile_sub_headers: ['Name', 'Rank', 'Vocation'],
+    profile_buttons: ['Update My Profile'],
     // Payslip screen
     payslip_mainHeader: ['Please enter details for your payslip', 'Expected total meal allowance'],
     payslip_subHeaders: [

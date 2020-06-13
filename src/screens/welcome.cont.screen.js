@@ -21,7 +21,7 @@ class WelcomeContScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            deductionAmount: ''
+            deductionAmount: 1
         }
     }
 
@@ -77,12 +77,12 @@ class WelcomeContScreen extends Component {
                   {/* Input name */}
                   <View>
                     <Text style={styles.inputHeader}>
-                      {stringResource.formHeaders.welcome_otherHeader[0]}
+                      {stringResource.formHeaders.welcome_otherHeaders[0]}
                     </Text>
                     <TextInput
                       style={styles.inputText}
                       placeholder={
-                        `Total ${stringResource.formHeaders.welcome_otherHeader[0].toLowerCase()}`
+                        `${stringResource.formHeaders.welcome_otherPlaceholders[0]} (Default: $${this.state.deductionAmount})`
                       }
                       onChangeText={deductionAmount => this.onDeductionAmountChange(deductionAmount)}
                     />

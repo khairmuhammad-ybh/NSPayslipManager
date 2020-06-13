@@ -204,7 +204,7 @@ class WelcomeScreen extends Component {
             },
         );
 
-        // dropdown picker - troop selection
+        // dropdown picker - vocation selection
         let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
             (s, i) => {
                 return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;

@@ -5,6 +5,8 @@ import * as Actions from '../redux/actions';
 import UUIDGenerator from 'react-native-uuid-generator';
 // datasource
 import * as dbProfile from '../datasource/profile.datasource';
+// service
+import * as servicePayslip from '../services/payslip.service';
 
 export const createProfile = user => {
     return new Promise((resolve, reject) => {
@@ -12,7 +14,7 @@ export const createProfile = user => {
             let profId = uuid;
             generateUUID().then(uuid => {
                 let dbId = uuid;
-        
+
                 let newProfile = {
                     _id: dbId,
                     profileId: profId,
@@ -28,18 +30,18 @@ export const createProfile = user => {
                 dbProfile
                     .registerProfile(newProfile)
                     .then(resp => {
-                    // success registered
-        
+                        // success registered
+
                         // retrieve profile to populate in drawable
                         dbProfile
                             .retrieveUserProfile().then(resp => {
-            
+
                                 console.log(JSON.parse(JSON.stringify(resp)))
                                 let profile = JSON.parse(JSON.stringify(resp))
                                 let name = profile[0].name
                                 let rank = profile[0].rank.rankName
                                 let vocation = profile[0].vocation
-                                store.dispatch(Actions.set_profile({name, rank, vocation}));
+                                store.dispatch(Actions.set_profile({ name, rank, vocation }));
                                 // store.dispatch(Actions.update_first_launch());
                                 resolve();
                             })
@@ -71,6 +73,52 @@ export const retrieveProfile = () => {
     });
 };
 
+export const updateProfile = data => {
+    return new Promise((resolve, reject) => {
+
+        dbProfile.retrieveUserProfile().then(resp => {
+            let profileObj = JSON.parse(JSON.stringify(resp))
+            let _id = profileObj[0]._id;
+
+            // update profile
+            let updatedProfile = {
+                _id: profileObj[0]._id,
+                name: data.name,
+                rank: { 
+                    rankName: data.rank.rankName,
+                    rankPay: data.rank.rankPay,
+                 },
+                vocation: data.vocation,
+            }
+
+            dbProfile.updateProfile(updatedProfile).then(resp => {
+                // success 
+                // update login state in redux
+                // console.log(updatePayslipTemplate)
+                let respObj = JSON.parse(JSON.stringify(resp))
+                let name = respObj[0].name
+                let rank = respObj[0].rank.rankName
+                let vocation = respObj[0].vocation
+                store.dispatch(Actions.update_profile({name, rank, vocation}))
+                servicePayslip.recalculatePayslipTemplate(updatedProfile, 'update').then(resp => {
+                    // console.log(`template updated`)
+                    resolve(JSON.parse(JSON.stringify(resp)));
+                })
+                .catch(err => {
+                    reject(err)
+                })
+            })
+            .catch(err => {
+                //  error
+                reject(err);
+            });
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 export const deleteProfile = () => {
     return new Promise((resolve, reject) => {
         dbProfile
@@ -97,8 +145,8 @@ const generateUUID = () => {
         UUIDGenerator.getRandomUUID().then(uuid => {
             resolve(uuid);
         })
-        .catch(err => {
-            reject(err);
-        });
+            .catch(err => {
+                reject(err);
+            });
     });
 };

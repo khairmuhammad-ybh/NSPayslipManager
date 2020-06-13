@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { 
+import {
     View,
     Text,
     KeyboardAvoidingView,
     TextInput,
     TouchableOpacity,
-    ActionSheetIOS
+    ActionSheetIOS,
+    Alert
 } from 'react-native';
 // styles
 import commonStyles from '../styles/common.style';
@@ -22,12 +23,12 @@ class PayslipScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rankPaySelected: '600',
-            monthSelected: 'Jan',
+            rankPaySelected: 0,
+            monthSelected: stringResource.pickersContents.pickerMonthContent[new Date().getMonth()],
             yearSelected: new Date().getFullYear().toString(),
             deductionAmount: 0,
             claimAmount: 0,
-            MealAmount: 0,
+            mealAmount: 0,
         };
     }
 
@@ -36,7 +37,7 @@ class PayslipScreen extends Component {
             rankPaySelected: rankValue,
         });
     }
-    
+
     onMonthValueChange(value) {
         this.setState({
             monthSelected: value,
@@ -49,18 +50,23 @@ class PayslipScreen extends Component {
                 return s;
             },
         );
-    
+
         monthItems.push("Cancel")
-    
+
         ActionSheetIOS.showActionSheetWithOptions(
             {
-                options : monthItems,
+                options: monthItems,
                 cancelButtonIndex: monthItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                monthSelected: stringResource.pickersContents.pickerMonthContent[buttonIndex],
-                });
+                if (buttonIndex === monthItems.length - 1) {
+                    // cancel
+                } else {
+                    this.setState({
+                        monthSelected: stringResource.pickersContents.pickerMonthContent[buttonIndex],
+                    });
+                }
+
             }
         )
     }
@@ -73,26 +79,31 @@ class PayslipScreen extends Component {
 
     onYearValueChangeIOS() {
         let curYear = new Date().getFullYear()
-        let prevYear = new Date().getFullYear()-1
-        let nxYear = new Date().getFullYear()+1
+        let prevYear = new Date().getFullYear() - 1
+        let nxYear = new Date().getFullYear() + 1
         let years = [prevYear.toString(), curYear.toString(), nxYear.toString()]
         let yearItems = years.map(
             (s) => {
                 return s;
             },
         );
-    
+
         yearItems.push("Cancel")
-    
+
         ActionSheetIOS.showActionSheetWithOptions(
             {
-                options : yearItems,
+                options: yearItems,
                 cancelButtonIndex: yearItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                yearSelected: years[buttonIndex],
-                });
+                if (buttonIndex === yearItems.length - 1) {
+                    // cancel
+                } else {
+                    this.setState({
+                        yearSelected: years[buttonIndex],
+                    });
+                }
+
             }
         )
     }
@@ -102,31 +113,39 @@ class PayslipScreen extends Component {
             deductionAmount: value,
         });
     }
-    
+
     onClaimValueChange(value) {
         this.setState({
             claimAmount: value,
         });
     }
-    
+
     onMealValueChange(value) {
         this.setState({
-            MealAmount: value,
+            mealAmount: value,
         });
     }
 
     onCalculatePaylip = () => {
-        let data = {
-            rank: this.state.rankPaySelected,
-            date: {
-                month: this.state.monthSelected,
-                year: this.state.yearSelected
-            },
-            mealAllowance: this.state.MealAmount,
-            deductionAmount: this.state.deductionAmount,
-            claimAmount: this.state.claimAmount,
-        };
-        this.props.navigation.navigate('AddPayslipCont', data)
+
+        if (this.state.rankPaySelected == 0 || this.state.mealAmount == 0 ||
+            this.state.deductionAmount == 0 || this.state.claimAmount == 0) {
+            Alert.alert("Incomplete fields", "Please fill up all fields before continue")
+        } else {
+            let data = {
+                rank: this.state.rankPaySelected,
+                date: {
+                    month: this.state.monthSelected,
+                    year: this.state.yearSelected
+                },
+                mealAllowance: this.state.mealAmount,
+                deductionAmount: this.state.deductionAmount,
+                claimAmount: this.state.claimAmount,
+            };
+            this.props.navigation.navigate('AddPayslipCont', data)
+        }
+
+
     };
 
     render() {
@@ -152,8 +171,8 @@ class PayslipScreen extends Component {
         );
 
         let curYear = new Date().getFullYear()
-        let prevYear = new Date().getFullYear()-1
-        let nxYear = new Date().getFullYear()+1
+        let prevYear = new Date().getFullYear() - 1
+        let nxYear = new Date().getFullYear() + 1
         let years = [prevYear.toString(), curYear.toString(), nxYear.toString()]
         let yearItems = years.map(
             (s, i) => {
@@ -184,38 +203,38 @@ class PayslipScreen extends Component {
                                 <Text style={styles.inputHeader}>
                                     {stringResource.formHeaders.payslip_subHeaders[0]}
                                 </Text>
-                                {Platform.OS == 'ios' ? 
-                                    <TouchableOpacity style={styles.dropdown}  onPress={() => this.onMonthValueChangeIOS()}>
-                                    <Text  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
-                                    {this.state.monthSelected}
-                                    </Text>
+                                {Platform.OS == 'ios' ?
+                                    <TouchableOpacity style={styles.dropdown} onPress={() => this.onMonthValueChangeIOS()}>
+                                        <Text style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
+                                            {this.state.monthSelected}
+                                        </Text>
                                     </TouchableOpacity> :
                                     <Picker
-                                    mode={'dropdown'}
-                                    style={styles.picker}
-                                    selectedValue={this.state.monthSelected}
-                                    onValueChange={this.onMonthValueChange.bind(this)}>
-                                    {monthItems}
+                                        mode={'dropdown'}
+                                        style={styles.picker}
+                                        selectedValue={this.state.monthSelected}
+                                        onValueChange={this.onMonthValueChange.bind(this)}>
+                                        {monthItems}
                                     </Picker>
                                 }
                             </View>
-                            
+
                             <View style={styles.horizontalFlexSubContainer_two}>
                                 <Text style={styles.inputHeader}>
                                     {stringResource.formHeaders.payslip_subHeaders[0]}
                                 </Text>
-                                {Platform.OS == 'ios' ? 
-                                    <TouchableOpacity style={styles.dropdown}  onPress={() => this.onYearValueChangeIOS()}>
-                                    <Text  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
-                                    {this.state.yearSelected}
-                                    </Text>
+                                {Platform.OS == 'ios' ?
+                                    <TouchableOpacity style={styles.dropdown} onPress={() => this.onYearValueChangeIOS()}>
+                                        <Text style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
+                                            {this.state.yearSelected}
+                                        </Text>
                                     </TouchableOpacity> :
                                     <Picker
-                                    mode={'dropdown'}
-                                    style={styles.picker}
-                                    selectedValue={this.state.yearSelected}
-                                    onValueChange={this.onYearValueChange.bind(this)}>
-                                    {yearItems}
+                                        mode={'dropdown'}
+                                        style={styles.picker}
+                                        selectedValue={this.state.yearSelected}
+                                        onValueChange={this.onYearValueChange.bind(this)}>
+                                        {yearItems}
                                     </Picker>
                                 }
                             </View>
@@ -231,7 +250,7 @@ class PayslipScreen extends Component {
                                     keyboardType={'number-pad'}
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[1]}
                                     onChangeText={rankValue => this.onRankValueChange(rankValue)}
-                                    ref={input => {this.rank = input;}}
+                                    ref={input => { this.rank = input; }}
                                 />
                             </View>
                         </View>
@@ -246,7 +265,7 @@ class PayslipScreen extends Component {
                                     keyboardType={'numeric'}
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[2]}
                                     onChangeText={name => this.onMealValueChange(name)}
-                                    ref={input => {this.meal = input;}}
+                                    ref={input => { this.meal = input; }}
                                 />
                             </View>
                         </View>
@@ -261,7 +280,7 @@ class PayslipScreen extends Component {
                                     keyboardType={'numeric'}
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[3]}
                                     onChangeText={name => this.onDeductionValueChange(name)}
-                                    ref={input => {this.deduction = input;}}
+                                    ref={input => { this.deduction = input; }}
                                 />
                             </View>
                         </View>
@@ -276,7 +295,7 @@ class PayslipScreen extends Component {
                                     keyboardType={'numeric'}
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[4]}
                                     onChangeText={name => this.onClaimValueChange(name)}
-                                    ref={input => {this.claim = input;}}
+                                    ref={input => { this.claim = input; }}
                                 />
                             </View>
                         </View>
