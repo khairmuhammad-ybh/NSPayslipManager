@@ -161,7 +161,6 @@
 				C29CD6E4BD625DF622AE419A /* Pods-NsPayslipManager-tvOSTests.debug.xcconfig */,
 				0C3B39FAF9E4E3264A13BDA3 /* Pods-NsPayslipManager-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -200,12 +199,11 @@
 			sourceTree = "<group>";
 		};
 		A852C047EAFD4524997F0FD0 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 

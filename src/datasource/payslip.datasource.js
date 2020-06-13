@@ -9,15 +9,24 @@ export const calculatePayslipTemplate = newPayslipTemplate => {
             .then(realm => {
                 let payslipTemplates = realm.objects(payslipTemplateSchema.name);
                 let payslips = payslipTemplates.filtered(`timeStamp = \"${newPayslipTemplate.timeStamp}\"`);
-                if (payslips > 0) {
-                    reject('payslip has been added');
-                }
-                //   write new payslip profile into database
-                realm.write(() => {
-                    realm.create(payslipTemplateSchema.name, newPayslipTemplate);
-                });
-                realm.close();
-                resolve(newPayslipTemplate);
+                if (payslips.length > 0) {
+                    // payslip template not fully cleared 
+                    // reject('payslip template has been added');
+                    realm.delete(payslipTemplates);
+                    //   write new payslip profile into database
+                    realm.write(() => {
+                        realm.create(payslipTemplateSchema.name, newPayslipTemplate);
+                    });
+                    realm.close();
+                    resolve(newPayslipTemplate);
+                }else {
+                    //   write new payslip profile into database
+                    realm.write(() => {
+                        realm.create(payslipTemplateSchema.name, newPayslipTemplate);
+                    });
+                    realm.close();
+                    resolve(newPayslipTemplate);
+                    }
             })
             .catch(err => {
                 reject(err);
@@ -59,9 +68,6 @@ export const recalculatePayslipTemplate = updateData => {
         Realm.open(payslipTemplateDbOptions)
             .then(realm => {
                 let payslipTemplates = realm.objects(payslipTemplateSchema.name);
-                if (payslipTemplates > 0) {
-                    reject('payslip has been added');
-                }
                 // modified payslip template in database
                 realm.write(() => {
                     realm.create(payslipTemplateSchema.name, updateData, 'modified');
@@ -87,16 +93,20 @@ export const calculatePayslip = newPayslip => {
         Realm.open(payslipDbOptions)
             .then(realm => {
                 let allPayslips = realm.objects(payslipSchema.name);
-                let payslips = allPayslips.filtered(`timeStamp = \"${newPayslip.timeStamp}\"`);
-                if (payslips > 0) {
-                    reject('payslip has been added');
+                console.log(JSON.parse(JSON.stringify(allPayslips)))
+                let payslips = allPayslips.filtered(`date.month = \"${newPayslip.date.month}\" AND date.year = \"${newPayslip.date.year}\"`);
+                if (payslips.length > 0) {
+                    // console.log('duplicate card')
+                    reject({error: 'payslip has been added', data: payslips.length});
+                } else {
+                    //   write new payslip into database
+                    realm.write(() => {
+                        realm.create(payslipSchema.name, newPayslip);
+                    });
+                    realm.close();
+                    resolve(newPayslip);
                 }
-                //   write new payslip into database
-                realm.write(() => {
-                    realm.create(payslipSchema.name, newPayslip);
-                });
-                realm.close();
-                resolve(newPayslip);
+                
             })
             .catch(err => {
                 reject(err);

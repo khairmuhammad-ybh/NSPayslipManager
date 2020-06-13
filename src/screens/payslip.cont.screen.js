@@ -45,10 +45,22 @@ class PayslipContScreen extends Component {
                     this.props.navigation.navigate('Home')
                 })
                 .catch(err => {
+                    // duplicate payslip
+                    Alert.alert('Alert', 
+                        `duplicate payslip, please remove the current payslip before adding new one.` +
+                        ` You will be redirect back to 'Home'`,
+                        [
+                            {
+                                text: 'OK', onPress: () => this.props.navigation.navigate('Home')
+                            }
+                        ]
+                    )
+                    
                     console.log(err)
                 })
             })
             .catch(err => {
+                // recalculate payslip template error
                 console.log(err)
             })
         }
