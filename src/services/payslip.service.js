@@ -189,7 +189,10 @@ export const calculatePayslip = (data, expectedPayslip) => {
             let newPayslip = {
                 _id: dbId,
                 rank: parseFloat(data.rank).toFixed(2),
-                month: data.month,
+                date: {
+                    month: data.date.month,
+                    year: data.date.year
+                },
                 vocationAllowance: parseFloat(vocationAllowance).toFixed(2),
                 mealAllowance: parseFloat(data.mealAllowance).toFixed(2),
                 basicSalary: parseFloat(data.rank).toFixed(2),
@@ -227,7 +230,10 @@ export const calculatePayslip = (data, expectedPayslip) => {
 
                     let comparedPayslip = {
                         _id: dbId,
-                        month: actualPayslip.month,
+                        date: {
+                            month: actualPayslip.date.month,
+                            year: actualPayslip.date.year
+                        },
                         rank: {
                             expected: expectedPayslip.rank,
                             actual: actualPayslip.rank
@@ -245,18 +251,19 @@ export const calculatePayslip = (data, expectedPayslip) => {
                             actual: actualPayslip.netSalary
                         },
                         extraOrLoss: parseFloat(extraOrLoss).toFixed(2),
+                        refPayslip: actualPayslip._id,
                         timeStamp: formattedDate
                     }
 
                     dbPayslip.calculateComparedPayslip(comparedPayslip).then(resp => {
                         // success
                         store.dispatch(Actions.update_new_payslip(comparedPayslip));
-                        console.log(`Exptected Payslip`)
-                        console.log(expectedPayslip)
-                        console.log(`Actual Payslip`)
-                        console.log(actualPayslip)
-                        console.log(`Compared Payslip`)
-                        console.log(resp)
+                        // console.log(`Exptected Payslip`)
+                        // console.log(expectedPayslip)
+                        // console.log(`Actual Payslip`)
+                        // console.log(actualPayslip)
+                        // console.log(`Compared Payslip`)
+                        // console.log(resp)
                         resolve(comparedPayslip);
                     })
                     .catch(err => {
@@ -334,6 +341,24 @@ export const retrieveComparedPayslips = () => {
         });
     });
 };
+
+export const removeSingleComparedPayslip = (comparedPayslip) => {
+    return new Promise((resolve, reject) => {
+        dbPayslip.removeSinglePayslip(comparedPayslip.refPayslip).then(() => {
+            // payslip removed
+            dbPayslip.removeSingleComparedPayslip(comparedPayslip._id).then(() => {
+                // comapared payslip removed
+                resolve();
+            })
+            .catch(err => {
+                reject(err);
+            })
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
 
 const generateUUID = () => {
     return new Promise((resolve, reject) => {

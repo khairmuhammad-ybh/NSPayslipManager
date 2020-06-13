@@ -23,6 +23,8 @@
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.2",
     "react-native-screens": "^2.8.0",
+    "react-native-swipeable-flat-list": "^0.1.2",
+    "react-native-swipeout": "^2.3.6",
     "react-native-uuid-generator": "^6.1.1",
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.2.0",

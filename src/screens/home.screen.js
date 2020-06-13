@@ -38,7 +38,7 @@ class HomeScreen extends Component {
     }
 
     onPress = payslip => {
-        console.log(payslip._id)
+        // console.log(payslip._id)
     }
 
     render() {
@@ -46,8 +46,8 @@ class HomeScreen extends Component {
             <FlatList
                 style={componentStyles.cardContentContainer}
                 data={store.getState().Payslip.payslips}
-                renderItem={({item}) => (
-                    <PayslipCard onPress={this.onPress} payslip={item} />
+                renderItem={({item, index}) => (
+                    <PayslipCard onPress={this.onPress} payslip={item} index={index} />
                 )}
                 keyExtractor={item => item._id.toString()}
                 extraData={this.props.payslips}

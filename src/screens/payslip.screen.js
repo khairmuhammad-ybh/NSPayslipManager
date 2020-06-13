@@ -16,6 +16,7 @@ import { Picker } from '@react-native-community/picker';
 import stringResource from '../resources/string.resource';
 // service
 import * as servicePayslip from '../services/payslip.service';
+import * as serviceRedux from '../services/redux.service';
 
 class PayslipScreen extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class PayslipScreen extends Component {
         this.state = {
             rankPaySelected: '600',
             monthSelected: 'Jan',
+            yearSelected: new Date().getFullYear().toString(),
             deductionAmount: 0,
             claimAmount: 0,
             MealAmount: 0,
@@ -63,6 +65,38 @@ class PayslipScreen extends Component {
         )
     }
 
+    onYearValueChange(value) {
+        this.setState({
+            yearSelected: value,
+        });
+    }
+
+    onYearValueChangeIOS() {
+        let curYear = new Date().getFullYear()
+        let prevYear = new Date().getFullYear()-1
+        let nxYear = new Date().getFullYear()+1
+        let years = [prevYear.toString(), curYear.toString(), nxYear.toString()]
+        let yearItems = years.map(
+            (s) => {
+                return s;
+            },
+        );
+    
+        yearItems.push("Cancel")
+    
+        ActionSheetIOS.showActionSheetWithOptions(
+            {
+                options : yearItems,
+                cancelButtonIndex: yearItems.length - 1
+            },
+            buttonIndex => {
+                this.setState({
+                yearSelected: years[buttonIndex],
+                });
+            }
+        )
+    }
+
     onDeductionValueChange(value) {
         this.setState({
             deductionAmount: value,
@@ -84,47 +118,44 @@ class PayslipScreen extends Component {
     onCalculatePaylip = () => {
         let data = {
             rank: this.state.rankPaySelected,
-            month: this.state.monthSelected,
+            date: {
+                month: this.state.monthSelected,
+                year: this.state.yearSelected
+            },
             mealAllowance: this.state.MealAmount,
             deductionAmount: this.state.deductionAmount,
             claimAmount: this.state.claimAmount,
         };
         this.props.navigation.navigate('AddPayslipCont', data)
-        // servicePayslip.calculatePayslip(data).then(resp => {
-        //         console.log('calculated');
-        //         this.props.navigation.goBack();
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
-    };
-
-    onClearPaylip = () => {
-        servicePayslip.clearAllPayslip().then(() => {
-                // success remove
-            })
-            .catch(err => {
-                console.log(err);
-            });
     };
 
     render() {
 
-        let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
+        // let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
+        //     (s, i) => {
+        //         return (
+        //             <Picker.Item
+        //                 key={i}
+        //                 value={`${
+        //                     stringResource.pickersContents.pickerRankContent.allowance[i]
+        //                 }`}
+        //                 label={`${s}`}
+        //             />
+        //       );
+        //     },
+        // );
+
+        let monthItems = stringResource.pickersContents.pickerMonthContent.map(
             (s, i) => {
-                return (
-                    <Picker.Item
-                        key={i}
-                        value={`${
-                            stringResource.pickersContents.pickerRankContent.allowance[i]
-                        }`}
-                        label={`${s}`}
-                    />
-              );
+                return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
             },
         );
 
-        let monthItems = stringResource.pickersContents.pickerMonthContent.map(
+        let curYear = new Date().getFullYear()
+        let prevYear = new Date().getFullYear()-1
+        let nxYear = new Date().getFullYear()+1
+        let years = [prevYear.toString(), curYear.toString(), nxYear.toString()]
+        let yearItems = years.map(
             (s, i) => {
                 return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
             },
@@ -147,32 +178,54 @@ class PayslipScreen extends Component {
                     </View>
                     {/* Middle content */}
                     <View style={styles.middleContainer}>
-                        {/* Month selection */}
-                        <View>
-                            <Text style={styles.inputHeader}>
-                                {stringResource.formHeaders.payslip_subHeaders[0]}
-                            </Text>
-                            {Platform.OS == 'ios' ? 
-                                <TouchableOpacity style={styles.inputFullText}  onPress={() => this.onMonthValueChangeIOS()}>
-                                <Text  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
-                                {this.state.monthSelected}
+                        <View style={styles.horizontalFlexContainer}>
+                            {/* Month selection */}
+                            <View style={styles.horizontalFlexSubContainer_one}>
+                                <Text style={styles.inputHeader}>
+                                    {stringResource.formHeaders.payslip_subHeaders[0]}
                                 </Text>
-                                </TouchableOpacity> :
-                                <Picker
-                                mode={'dropdown'}
-                                style={styles.picker}
-                                selectedValue={this.state.monthSelected}
-                                onValueChange={this.onMonthValueChange.bind(this)}>
-                                {monthItems}
-                                </Picker>
-                            }
+                                {Platform.OS == 'ios' ? 
+                                    <TouchableOpacity style={styles.dropdown}  onPress={() => this.onMonthValueChangeIOS()}>
+                                    <Text  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
+                                    {this.state.monthSelected}
+                                    </Text>
+                                    </TouchableOpacity> :
+                                    <Picker
+                                    mode={'dropdown'}
+                                    style={styles.picker}
+                                    selectedValue={this.state.monthSelected}
+                                    onValueChange={this.onMonthValueChange.bind(this)}>
+                                    {monthItems}
+                                    </Picker>
+                                }
+                            </View>
+                            
+                            <View style={styles.horizontalFlexSubContainer_two}>
+                                <Text style={styles.inputHeader}>
+                                    {stringResource.formHeaders.payslip_subHeaders[0]}
+                                </Text>
+                                {Platform.OS == 'ios' ? 
+                                    <TouchableOpacity style={styles.dropdown}  onPress={() => this.onYearValueChangeIOS()}>
+                                    <Text  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}>
+                                    {this.state.yearSelected}
+                                    </Text>
+                                    </TouchableOpacity> :
+                                    <Picker
+                                    mode={'dropdown'}
+                                    style={styles.picker}
+                                    selectedValue={this.state.yearSelected}
+                                    onValueChange={this.onYearValueChange.bind(this)}>
+                                    {yearItems}
+                                    </Picker>
+                                }
+                            </View>
                         </View>
                         {/* Total rank pay */}
                         <View>
                             <Text style={styles.inputHeader}>
                                 {stringResource.formHeaders.payslip_subHeaders[1]}
                             </Text>
-                            <View style={styles.inputFullText}>
+                            <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'number-pad'}
@@ -187,7 +240,7 @@ class PayslipScreen extends Component {
                             <Text style={styles.inputHeader}>
                                 {stringResource.formHeaders.payslip_subHeaders[2]}
                             </Text>
-                            <View style={styles.inputFullText}>
+                            <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'numeric'}
@@ -202,7 +255,7 @@ class PayslipScreen extends Component {
                             <Text style={styles.inputHeader}>
                                 {stringResource.formHeaders.payslip_subHeaders[3]}
                             </Text>
-                            <View style={styles.inputFullText}>
+                            <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'numeric'}
@@ -217,7 +270,7 @@ class PayslipScreen extends Component {
                             <Text style={styles.inputHeader}>
                                 {stringResource.formHeaders.payslip_subHeaders[4]}
                             </Text>
-                            <View style={styles.inputFullText}>
+                            <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'numeric'}
@@ -234,13 +287,6 @@ class PayslipScreen extends Component {
                                 onPress={() => this.onCalculatePaylip()}>
                                 <Text style={styles.btnText}>
                                     {stringResource.formHeaders.payslip_buttons[0]}
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => this.onClearPaylip()}>
-                                <Text style={styles.btnText}>
-                                    Clear Payslips
                                 </Text>
                             </TouchableOpacity>
                         </View>

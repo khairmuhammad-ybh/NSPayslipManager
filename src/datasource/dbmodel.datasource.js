@@ -44,7 +44,7 @@ export const payslipSchema = {
     properties: {
         _id: 'string',
         rank: 'string',
-        month: 'string',
+        date: {type: 'Date'},
         vocationAllowance: 'string',
         mealAllowance: 'string',
         basicSalary: 'string',
@@ -57,17 +57,26 @@ export const payslipSchema = {
     },
 };
 
+export const dateSchema = {
+    name: 'Date',
+    properties: {
+        month: 'string',
+        year: 'string',
+    },
+}
+
 export const payslipComparedSchema = {
     name: 'ComparedPayslip',
     primaryKey: '_id',
     properties: {
         _id: 'string',
-        month: 'string',
+        date: {type: 'Date'},
         rank: {type: 'PayslipDiff'},
         mealAllowance: {type: 'PayslipDiff'},
         claimAndOthers: {type: 'PayslipDiff'},
         netSalary: {type: 'PayslipDiff'},
         extraOrLoss: 'string',
+        refPayslip: 'string',
         timeStamp: 'string',
     }
 }

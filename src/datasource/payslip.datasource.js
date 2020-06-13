@@ -104,6 +104,25 @@ export const calculatePayslip = newPayslip => {
     });
 };
 
+export const removeSinglePayslip = (_id) => {
+    return new Promise((resolve, reject) => {
+        Realm.open(payslipDbOptions)
+            .then(realm => {
+                realm.write(() => {
+                    let allPayslips = realm.objects(payslipSchema.name);
+                    let filteredPayslip = allPayslips.filtered(`_id = \"${_id}\"`)
+                    realm.delete(filteredPayslip);
+                });
+    
+                // let retrievePayslips = realm.objects(payslipSchema.name);
+                resolve();
+            })
+            .catch(err => {
+                reject(err);
+            });
+    });
+};
+
 export const retrievePayslip = () => {
     return new Promise((resolve, reject) => {
         Realm.open(payslipDbOptions)
@@ -167,6 +186,25 @@ export const resetComparedPayslip = () => {
     
                 let retrieveComparedPayslips = realm.objects(payslipComparedSchema.name);
                 resolve(retrieveComparedPayslips);
+            })
+            .catch(err => {
+                reject(err);
+            });
+    });
+};
+
+export const removeSingleComparedPayslip = (_id) => {
+    return new Promise((resolve, reject) => {
+        Realm.open(payslipComparedDbOptions)
+            .then(realm => {
+                realm.write(() => {
+                    let allComparedPayslips = realm.objects(payslipComparedSchema.name);
+                    let filteredPayslip = allComparedPayslips.filtered(`_id = \"${_id}\"`)
+                    realm.delete(filteredPayslip);
+                });
+    
+                // let retrieveComparedPayslips = realm.objects(payslipComparedSchema.name);
+                resolve();
             })
             .catch(err => {
                 reject(err);

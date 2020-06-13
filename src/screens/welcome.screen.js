@@ -172,15 +172,6 @@ class WelcomeScreen extends Component {
             Alert.alert("Invalid Fields", "Please enter your name");
         }else{
             this.props.navigation.navigate('WelcomeCont', user)
-            // service
-            // .createProfile(user)
-            // .then(userProfile => {
-            //   console.log('user profile created');
-            //   console.log(userProfile);
-            // })
-            // .catch(err => {
-            //   console.log(err);
-            // });
         }
     };
 

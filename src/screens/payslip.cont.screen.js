@@ -38,6 +38,7 @@ class PayslipContScreen extends Component {
         // recalculate payslip template
         servicePayslip.recalculatePayslipTemplate({mealAllowance: this.state.mealAmount}).then(resp => {
                 let expectedPayslip = resp
+                // console.log(data)
                 // calculate payslip
                 servicePayslip.calculatePayslip(data, expectedPayslip).then(resp => {
                         this.props.navigation.navigate('Home')

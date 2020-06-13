@@ -7,6 +7,7 @@ import * as Actions from '../redux/actions'
 // services
 import * as serviceProfile from '../services/profile.service';
 import * as servicePayslip from '../services/payslip.service';
+import * as serviceRedux from '../services/redux.service';
 
 // Logout user
 onDeleteProfile = () => {
@@ -16,6 +17,15 @@ onDeleteProfile = () => {
             servicePayslip.clearAllPayslipTemplate().then(resp => {
                     console.log('user profile deleted');
                     console.log(userProfile);
+                    servicePayslip.clearAllPayslip().then(resp => {
+                        // all payslip cleared
+                        serviceRedux.userSignOut().then(() => {
+                            // all redux store cleared
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
                 })
                 .catch(err => {
                     console.log(err)

@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  horizontalFlexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: Dimensions.get('screen').width - 30,
+  },
   horizontalFlexSubContainer_one: {flex: 1},
   horizontalFlexSubContainer_two: {flex: 0.7},
   title: {
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 1.5,
-    width: Dimensions.get('screen').width - 30,
+    // width: Dimensions.get('screen').width - 30,
   },
   inputHeader: {fontSize: 24, marginStart: 10},
   keyboard: {flex: 1, flexDirection: 'column'},
@@ -85,8 +90,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  inputFullTextIOS: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width - 30,
+  },
   inputFullText: {
-    height: 48,
+    height: 40,
     margin: 10,
     borderColor: '#000',
     borderRadius: 5,
@@ -103,6 +117,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
   },
+  dropdown: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+  }
 });
 
 export default styles;

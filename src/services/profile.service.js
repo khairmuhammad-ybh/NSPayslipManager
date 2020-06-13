@@ -78,11 +78,11 @@ export const deleteProfile = () => {
             .then(resp => {
                 // success delete
                 // update login state in redux
-                store.dispatch(Actions.update_first_launch());
-                let name = ''
-                let rank = ''
-                let vocation = ''
-                store.dispatch(Actions.set_profile({name, rank, vocation}));
+                // store.dispatch(Actions.update_first_launch());
+                // let name = ''
+                // let rank = ''
+                // let vocation = ''
+                // store.dispatch(Actions.set_profile({name, rank, vocation}));
                 resolve(JSON.parse(JSON.stringify(resp)));
             })
             .catch(err => {
