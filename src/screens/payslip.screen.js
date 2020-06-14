@@ -16,6 +16,7 @@ import styles from '../styles/payslip.style';
 import { Picker } from '@react-native-community/picker';
 // resources
 import stringResource from '../resources/string.resource';
+import * as pickers from '../components/picker.component';
 
 class PayslipScreen extends Component {
     constructor(props) {
@@ -43,11 +44,7 @@ class PayslipScreen extends Component {
     }
 
     onMonthValueChangeIOS() {
-        let monthItems = stringResource.pickersContents.pickerMonthContent.map(
-            (s) => {
-                return s;
-            },
-        );
+        let monthItems = pickers.pickerMonthIOS()
 
         monthItems.push("Cancel")
 
@@ -148,39 +145,11 @@ class PayslipScreen extends Component {
 
     render() {
 
-        // let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
-        //     (s, i) => {
-        //         return (
-        //             <Picker.Item
-        //                 key={i}
-        //                 value={`${
-        //                     stringResource.pickersContents.pickerRankContent.allowance[i]
-        //                 }`}
-        //                 label={`${s}`}
-        //             />
-        //       );
-        //     },
-        // );
-
-        let monthItems = stringResource.pickersContents.pickerMonthContent.map(
-            (s, i) => {
-                return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
-            },
-        );
-
-        let curYear = new Date().getFullYear()
-        let prevYear = new Date().getFullYear() - 1
-        let nxYear = new Date().getFullYear() + 1
-        let years = [prevYear.toString(), curYear.toString(), nxYear.toString()]
-        let yearItems = years.map(
-            (s, i) => {
-                return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
-            },
-        );
-
+        let monthItems = pickers.pickerMonth();
+        let yearItems = pickers.pickerYear();
 
         return (
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
                 <View style={commonStyles.container}>
                     {/* Top header */}
                     <View style={styles.topContainer}>
@@ -216,7 +185,7 @@ class PayslipScreen extends Component {
 
                             <View style={styles.horizontalFlexSubContainer_two}>
                                 <Text style={styles.inputHeader}>
-                                    {stringResource.formHeaders.payslip_subHeaders[0]}
+                                    {stringResource.formHeaders.payslip_subHeaders[1]}
                                 </Text>
                                 {Platform.OS == 'ios' ?
                                     <TouchableOpacity style={styles.dropdown} onPress={() => this.onYearValueChangeIOS()}>
@@ -237,13 +206,13 @@ class PayslipScreen extends Component {
                         {/* Total rank pay */}
                         <View>
                             <Text style={styles.inputHeader}>
-                                {stringResource.formHeaders.payslip_subHeaders[1]}
+                                {stringResource.formHeaders.payslip_subHeaders[2]}
                             </Text>
                             <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'number-pad'}
-                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[1]}
+                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[2]}
                                     onChangeText={rankValue => this.onRankValueChange(rankValue)}
                                     ref={input => { this.rank = input; }}
                                     onSubmitEditing={() => {this.meal.focus()}}
@@ -254,13 +223,13 @@ class PayslipScreen extends Component {
                         {/* Meal allowance section */}
                         <View>
                             <Text style={styles.inputHeader}>
-                                {stringResource.formHeaders.payslip_subHeaders[2]}
+                                {stringResource.formHeaders.payslip_subHeaders[3]}
                             </Text>
                             <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'numeric'}
-                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[2]}
+                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[3]}
                                     onChangeText={name => this.onMealValueChange(name)}
                                     ref={input => { this.meal = input; }}
                                     onSubmitEditing={() => {this.deduction.focus()}}
@@ -271,13 +240,13 @@ class PayslipScreen extends Component {
                         {/* Deduction section */}
                         <View>
                             <Text style={styles.inputHeader}>
-                                {stringResource.formHeaders.payslip_subHeaders[3]}
+                                {stringResource.formHeaders.payslip_subHeaders[4]}
                             </Text>
                             <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'numeric'}
-                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[3]}
+                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[4]}
                                     onChangeText={name => this.onDeductionValueChange(name)}
                                     ref={input => { this.deduction = input; }}
                                     onSubmitEditing={() => {this.claim.focus()}}
@@ -288,13 +257,13 @@ class PayslipScreen extends Component {
                         {/* Claim/others section */}
                         <View>
                             <Text style={styles.inputHeader}>
-                                {stringResource.formHeaders.payslip_subHeaders[4]}
+                                {stringResource.formHeaders.payslip_subHeaders[5]}
                             </Text>
                             <View style={Platform.OS == 'ios' ? styles.inputFullTextIOS : styles.inputFullText}>
                                 <TextInput
                                     style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                                     keyboardType={'numeric'}
-                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[4]}
+                                    placeholder={stringResource.formHeaders.payslip_subPlaceholder[5]}
                                     onChangeText={name => this.onClaimValueChange(name)}
                                     ref={input => { this.claim = input; }}
                                 />

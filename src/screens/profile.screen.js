@@ -17,6 +17,7 @@ import stringResource from '../resources/string.resource';
 import { store } from '../redux/store';
 // components
 import { Picker } from '@react-native-community/picker';
+import * as pickers from '../components/picker.component';
 // service
 import * as serviceProfile from '../services/profile.service';
 
@@ -39,14 +40,16 @@ class ProfileScreen extends Component {
         })
     }
 
+    onRankValueChange(rankValue, rankIndex) {
+        this.setState({
+            rankPaySelected: rankValue,
+            rankNameSelected:
+                stringResource.pickersContents.pickerRankContent.ranks[rankIndex],
+        });
+    }
+
     onRankValueChangeIOS() {
-        let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
-            (s, i) => {
-                return (
-                s
-                );
-            },
-        );
+        let rankItems = pickers.pickerRankIOS()
         rankItems.push("Cancel")
     
         ActionSheetIOS.showActionSheetWithOptions(
@@ -55,11 +58,15 @@ class ProfileScreen extends Component {
                 cancelButtonIndex: rankItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                    rankPaySelected: stringResource.pickersContents.pickerRankContent.allowance[buttonIndex].toString(),
-                    rankNameSelected:
-                        stringResource.pickersContents.pickerRankContent.ranks[buttonIndex],
-                });
+                if (buttonIndex === rankItems.length - 1) {
+                    // cancel
+                }else {
+                    this.setState({
+                        rankPaySelected: stringResource.pickersContents.pickerRankContent.allowance[buttonIndex].toString(),
+                        rankNameSelected:
+                            stringResource.pickersContents.pickerRankContent.ranks[buttonIndex],
+                    });
+                }
             }
         )
     }
@@ -71,11 +78,7 @@ class ProfileScreen extends Component {
     }
 
     onVocationValueChangeIOS() {
-        let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
-            (s) => {
-                return s;
-            },
-        );
+        let vocationItems = pickers.pickerVocationIOS()
         vocationItems.push("Cancel")
         
         ActionSheetIOS.showActionSheetWithOptions(
@@ -84,9 +87,13 @@ class ProfileScreen extends Component {
                 cancelButtonIndex: vocationItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                    vocationSelected: stringResource.pickersContents.pickerVocationContent.vocations[buttonIndex],
-                });
+                if (buttonIndex === vocationItems.length - 1) {
+                    // cancel
+                }else {
+                    this.setState({
+                        vocationSelected: stringResource.pickersContents.pickerVocationContent.vocations[buttonIndex],
+                    });
+                }
             }
         )
     }
@@ -126,27 +133,8 @@ class ProfileScreen extends Component {
 
     render() {
 
-        // dropdown picker - rank selection
-        let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
-            (s, i) => {
-            return (
-                <Picker.Item
-                    key={i}
-                    value={`${
-                        stringResource.pickersContents.pickerRankContent.allowance[i]
-                    }`}
-                    label={`${s}`}
-                />
-            );
-            },
-        );
-
-        // dropdown picker - vocation selection
-        let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
-            (s, i) => {
-                return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
-            },
-        );
+        let rankItems = pickers.pickerRank()
+        let vocationItems = pickers.pickerVocation()
 
         return (
             <KeyboardAvoidingView

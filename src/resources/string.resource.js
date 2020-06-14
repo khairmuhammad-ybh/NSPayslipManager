@@ -28,6 +28,7 @@ const stringResource = {
     payslip_mainHeader: ['Please enter details for your payslip', 'Expected total meal allowance'],
     payslip_subHeaders: [
       'Month',
+      'Year',
       'Total Rank Pay',
       'Total Meal Allowance',
       'Total Deductions',
@@ -35,6 +36,7 @@ const stringResource = {
       'Total Expected Meal Allowance'
     ],
     payslip_subPlaceholder: [
+      '',
       '', 
       'Total amount rank pay', 
       'Total amount meal allowance', 

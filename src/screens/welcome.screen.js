@@ -13,6 +13,7 @@ import commonStyles from '../styles/common.style';
 import styles from '../styles/welcome.style';
 // components
 import { Picker } from '@react-native-community/picker';
+import * as pickers from '../components/picker.component';
 // resources
 import stringResource from '../resources/string.resource';
 // redux
@@ -38,14 +39,14 @@ class WelcomeScreen extends Component {
     }
 
     onDivValueChangeIOS() {
-        let divItems = stringResource.pickersContents.pickerDivContent.units.map(
-            (s) => {
-                return (
-                `${stringResource.pickersContents.pickerDivContent.prefix}/${s}`
-                );
-            },
-        );
-    
+        // let divItems = stringResource.pickersContents.pickerDivContent.units.map(
+        //     (s) => {
+        //         return (
+        //         `${stringResource.pickersContents.pickerDivContent.prefix}/${s}`
+        //         );
+        //     },
+        // );
+        let divItems = pickers.pickerDivisionIOS()
         divItems.push("Cancel")
     
         ActionSheetIOS.showActionSheetWithOptions(
@@ -54,9 +55,13 @@ class WelcomeScreen extends Component {
                 cancelButtonIndex: divItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                    divSelected: `${stringResource.pickersContents.pickerDivContent.prefix}/${stringResource.pickersContents.pickerDivContent.units[buttonIndex]}`,
-                });
+                if (buttonIndex === divItems.length - 1) {
+                    // cancel
+                }else {
+                    this.setState({
+                        divSelected: `${stringResource.pickersContents.pickerDivContent.prefix}/${stringResource.pickersContents.pickerDivContent.units[buttonIndex]}`,
+                    });
+                }
             }
         )
         
@@ -69,11 +74,12 @@ class WelcomeScreen extends Component {
     }
 
     onTroopValueChangeIOS() {
-        let troopItems = stringResource.pickersContents.pickerDivContent.troops.map(
-            (s) => {
-                return s;
-            },
-        );
+        // let troopItems = stringResource.pickersContents.pickerDivContent.troops.map(
+        //     (s) => {
+        //         return s;
+        //     },
+        // );
+        let troopItems = pickers.pickerTroopIOS()
         troopItems.push("Cancel")
         
         ActionSheetIOS.showActionSheetWithOptions(
@@ -82,9 +88,13 @@ class WelcomeScreen extends Component {
                 cancelButtonIndex: troopItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                    troopSelected: stringResource.pickersContents.pickerDivContent.troops[buttonIndex],
-                });
+                if (buttonIndex === troopItems.length - 1) {
+                    // cancel
+                }else {
+                    this.setState({
+                        troopSelected: stringResource.pickersContents.pickerDivContent.troops[buttonIndex],
+                    });
+                }
             }
         )
     }
@@ -96,11 +106,12 @@ class WelcomeScreen extends Component {
     }
 
     onVocationValueChangeIOS() {
-        let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
-            (s) => {
-                return s;
-            },
-        );
+        // let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
+        //     (s) => {
+        //         return s;
+        //     },
+        // );
+        let vocationItems = pickers.pickerVocationIOS()
         vocationItems.push("Cancel")
         
         ActionSheetIOS.showActionSheetWithOptions(
@@ -109,9 +120,13 @@ class WelcomeScreen extends Component {
                 cancelButtonIndex: vocationItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                    vocationSelected: stringResource.pickersContents.pickerVocationContent.vocations[buttonIndex],
-                });
+                if (buttonIndex === vocationItems.length - 1) {
+                    // cancel
+                }else {
+                    this.setState({
+                        vocationSelected: stringResource.pickersContents.pickerVocationContent.vocations[buttonIndex],
+                    });
+                }
             }
         )
     }
@@ -125,13 +140,14 @@ class WelcomeScreen extends Component {
     }
 
     onRankValueChangeIOS() {
-        let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
-            (s, i) => {
-                return (
-                s
-                );
-            },
-        );
+        // let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
+        //     (s, i) => {
+        //         return (
+        //         s
+        //         );
+        //     },
+        // );
+        let rankItems = pickers.pickerRankIOS()
         rankItems.push("Cancel")
     
         ActionSheetIOS.showActionSheetWithOptions(
@@ -140,11 +156,14 @@ class WelcomeScreen extends Component {
                 cancelButtonIndex: rankItems.length - 1
             },
             buttonIndex => {
-                this.setState({
-                    rankPaySelected: stringResource.pickersContents.pickerRankContent.allowance[buttonIndex].toString(),
-                    rankNameSelected:
-                        stringResource.pickersContents.pickerRankContent.ranks[buttonIndex],
-                });
+                if (buttonIndex === rankItems.length - 1) {
+                    // cancel
+                }else {
+                    this.setState({
+                        rankPaySelected: stringResource.pickersContents.pickerRankContent.allowance[buttonIndex].toString(),
+                        rankNameSelected: stringResource.pickersContents.pickerRankContent.ranks[buttonIndex],
+                    });
+                }
             }
         )
     }
@@ -180,51 +199,10 @@ class WelcomeScreen extends Component {
     }
 
     render() {
-        // dropdown picker - division/unit selection
-        let divItems = stringResource.pickersContents.pickerDivContent.units.map(
-            (s, i) => {
-                return (
-                    <Picker.Item
-                    key={i}
-                    value={`${
-                        stringResource.pickersContents.pickerDivContent.prefix
-                    }/${s}`}
-                    label={`${
-                        stringResource.pickersContents.pickerDivContent.prefix
-                    }/${s}`}
-                    />
-                );
-            },
-        );
-
-        // dropdown picker - troop selection
-        let troopItems = stringResource.pickersContents.pickerDivContent.troops.map(
-            (s, i) => {
-                return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
-            },
-        );
-
-        // dropdown picker - vocation selection
-        let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
-            (s, i) => {
-                return <Picker.Item key={i} value={`${s}`} label={`${s}`} />;
-            },
-        );
-
-        // dropdown picker - rank selection
-        let rankItems = stringResource.pickersContents.pickerRankContent.ranks.map(
-            (s, i) => {
-            return (
-                <Picker.Item
-                    key={i}
-                    value={`${
-                        stringResource.pickersContents.pickerRankContent.allowance[i]
-                    }`}
-                    label={`${s}`}
-                />
-            );
-            },
-        );
+        let divItems = pickers.pickerDivision()
+        let troopItems = pickers.pickerTroop()
+        let vocationItems = pickers.pickerVocation()
+        let rankItems = pickers.pickerRank()
 
         return (
             <KeyboardAvoidingView
