@@ -64,6 +64,12 @@ class ProfileScreen extends Component {
         )
     }
 
+    onVocationValueChange(value) {
+        this.setState({
+            vocationSelected: value
+        })
+    }
+
     onVocationValueChangeIOS() {
         let vocationItems = stringResource.pickersContents.pickerVocationContent.vocations.map(
             (s) => {

@@ -8,6 +8,7 @@ import {
     ActionSheetIOS,
     Alert
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // styles
 import commonStyles from '../styles/common.style';
 import styles from '../styles/payslip.style';
@@ -15,9 +16,6 @@ import styles from '../styles/payslip.style';
 import { Picker } from '@react-native-community/picker';
 // resources
 import stringResource from '../resources/string.resource';
-// service
-import * as servicePayslip from '../services/payslip.service';
-import * as serviceRedux from '../services/redux.service';
 
 class PayslipScreen extends Component {
     constructor(props) {
@@ -180,12 +178,9 @@ class PayslipScreen extends Component {
             },
         );
 
+
         return (
-            <KeyboardAvoidingView
-                behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-                enabled
-                keyboardVerticalOffset={-100}
-                style={styles.keyboard}>
+            <KeyboardAwareScrollView>
                 <View style={commonStyles.container}>
                     {/* Top header */}
                     <View style={styles.topContainer}>
@@ -251,6 +246,8 @@ class PayslipScreen extends Component {
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[1]}
                                     onChangeText={rankValue => this.onRankValueChange(rankValue)}
                                     ref={input => { this.rank = input; }}
+                                    onSubmitEditing={() => {this.meal.focus()}}
+                                    blurOnSubmit={false}
                                 />
                             </View>
                         </View>
@@ -266,6 +263,8 @@ class PayslipScreen extends Component {
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[2]}
                                     onChangeText={name => this.onMealValueChange(name)}
                                     ref={input => { this.meal = input; }}
+                                    onSubmitEditing={() => {this.deduction.focus()}}
+                                    blurOnSubmit={false}
                                 />
                             </View>
                         </View>
@@ -281,6 +280,8 @@ class PayslipScreen extends Component {
                                     placeholder={stringResource.formHeaders.payslip_subPlaceholder[3]}
                                     onChangeText={name => this.onDeductionValueChange(name)}
                                     ref={input => { this.deduction = input; }}
+                                    onSubmitEditing={() => {this.claim.focus()}}
+                                    blurOnSubmit={false}
                                 />
                             </View>
                         </View>
@@ -311,7 +312,7 @@ class PayslipScreen extends Component {
                         </View>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+            </KeyboardAwareScrollView>
         );
     }
 }

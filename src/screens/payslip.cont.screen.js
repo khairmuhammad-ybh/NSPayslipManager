@@ -95,6 +95,7 @@ class PayslipContScreen extends Component {
                             </Text>
                             <TextInput
                                 style={styles.inputText}
+                                keyboardType={'number-pad'}
                                 placeholder={
                                     `Total ${stringResource.formHeaders.payslip_subHeaders[5].toLowerCase()}`
                                 }
