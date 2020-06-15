@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   textStyle: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   textStyleIOS: {
     height: 37,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 1.5,
-  }
+  },
 });
 
 export default styles;

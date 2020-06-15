@@ -11,9 +11,9 @@ export const update_new_payslip = payslip => ({
 
 export const populate_payslips = payslips => ({
   type: POPULATE_PAYSLIPS,
-  payload: payslips
+  payload: payslips,
 });
 
 export const reset_payslips = () => ({
-  type: RESET_PAYSLIPS
+  type: RESET_PAYSLIPS,
 });

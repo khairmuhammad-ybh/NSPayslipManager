@@ -10,5 +10,5 @@ export const set_profile = profile => ({
 
 export const update_profile = profile => ({
   type: UPDATE_PROFILE,
-  payload: profile
+  payload: profile,
 });

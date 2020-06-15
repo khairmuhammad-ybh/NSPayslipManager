@@ -37,20 +37,20 @@ const styles = StyleSheet.create({
   },
   valueContainerMid: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     alignItems: 'center',
   },
   flexContainerRow: {
-    flex: 1, 
+    flex: 1,
     flexDirection: 'row',
   },
   innerFlexRow1: {
     flex: 1,
   },
   innerFlexRow2: {
-    flex: 2, 
+    flex: 2,
     alignItems: 'center',
-  }
+  },
 });
 
 export default styles;

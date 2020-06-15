@@ -1,36 +1,34 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react';
 // Navigators
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import AppNav from '../navigations/app.navigation';
 import InitNav from '../navigations/init.navigation';
 // redux/redux-persist
-import { store, persistor } from '../redux/store';
-import { connect } from 'react-redux';
+import {store, persistor} from '../redux/store';
+import {connect} from 'react-redux';
 
 class mainNav extends Component {
-    
-    componentDidMount() {
-        // persistor.purge();
-      }
+  componentDidMount() {
+    // persistor.purge();
+  }
 
-    render() {
+  render() {
+    isFirst = store.getState().NSPayslipManager.firstLaunch;
 
-        isFirst = store.getState().NSPayslipManager.firstLaunch;
-
-        return (
-            <NavigationContainer>
-                {isFirst ? <InitNav/> : <AppNav/>}
-            </NavigationContainer>
-        )
-    }
+    return (
+      <NavigationContainer>
+        {isFirst ? <InitNav /> : <AppNav />}
+      </NavigationContainer>
+    );
+  }
 }
 
 const stp = store => {
-    let { NSPayslipManager } = store;
-  
-    return {
-      NSPayslipManager: NSPayslipManager,
-    };
-  }
+  let {NSPayslipManager} = store;
+
+  return {
+    NSPayslipManager: NSPayslipManager,
+  };
+};
 
 export default connect(stp)(mainNav);

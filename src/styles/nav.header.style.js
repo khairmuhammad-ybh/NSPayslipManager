@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     width: 80,
   },
   headerDefaultTextAlignmenyIOS: {
-    alignSelf: 'center', 
-    fontSize: 18, 
+    alignSelf: 'center',
+    fontSize: 18,
     color: 'blue',
   },
   headerTitleAlignment: {
