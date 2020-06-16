@@ -7,6 +7,8 @@ import UUIDGenerator from 'react-native-uuid-generator';
 import * as dbProfile from '../datasource/profile.datasource';
 // service
 import * as servicePayslip from '../services/payslip.service';
+// google-crashlytics
+import crashlytics from '@react-native-firebase/crashlytics';
 
 export const createProfile = user => {
   return new Promise((resolve, reject) => {
@@ -36,7 +38,7 @@ export const createProfile = user => {
             dbProfile
               .retrieveUserProfile()
               .then(resp => {
-                console.log(JSON.parse(JSON.stringify(resp)));
+                // success retrieve user profile
                 let profile = JSON.parse(JSON.stringify(resp));
                 let name = profile[0].name;
                 let rank = profile[0].rank.rankName;
@@ -46,14 +48,28 @@ export const createProfile = user => {
               })
               .catch(err => {
                 // failed to retrieve user profile
-                // TODO firebase crashlytics (crash report)
-                reject(err);
+                // firebase crashlytics (crash report)
+                crashlytics().log('source: profile.service.js');
+                crashlytics().log('method: dbProfile.retrieveUserProfile()');
+                crashlytics().log('summary: unable to retrieve profile');
+                crashlytics().recordError(err);
+                reject({
+                  message: 'unable to retrieve profile',
+                  error: err,
+                });
               });
           })
           .catch(err => {
             // failed to register
-            // TODO firebase crashlytics (crash report)
-            reject(err);
+            // firebase crashlytics (crash report)
+            crashlytics().log('source: profile.service.js');
+            crashlytics().log('method: dbProfile.registerProfile(newProfile)');
+            crashlytics().log('summary: unable to register profile');
+            crashlytics().recordError(err);
+            reject({
+              message: 'unable to register profile',
+              error: err,
+            });
           });
       });
     });
@@ -70,8 +86,15 @@ export const retrieveProfile = () => {
       })
       .catch(err => {
         // failed to retrieve profile
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        //  firebase crashlytics (crash report)
+        crashlytics().log('source: profile.service.js');
+        crashlytics().log('method: dbProfile.retrieveUserProfile()');
+        crashlytics().log('summary: unable to retrieve profile');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to retrieve profile',
+          error: err,
+        });
       });
   });
 };
@@ -112,20 +135,45 @@ export const updateProfile = data => {
               })
               .catch(err => {
                 // failed to recalculate payslip template
-                // TODO firebase crashlytics (crash report)
-                reject(err);
+                // firebase crashlytics (crash report)
+                crashlytics().log('source: profile.service.js');
+                crashlytics().log(
+                  'method: dbProfile.recalculatePayslipTemplate()',
+                );
+                crashlytics().log('summary: unable to re-calculate payslip');
+                crashlytics().recordError(err);
+                reject({
+                  message: 'unable to re-calculate payslip template',
+                  error: err,
+                });
               });
           })
           .catch(err => {
-            //  failed to update profile
-            // TODO firebase crashlytics (crash report)
-            reject(err);
+            // failed to update profile
+            // firebase crashlytics (crash report)
+            crashlytics().log('source: profile.service.js');
+            crashlytics().log(
+              'method: dbProfile.updateProfile(updatedProfile)',
+            );
+            crashlytics().log('summary: unable to update profile');
+            crashlytics().recordError(err);
+            reject({
+              message: 'unable to update profile',
+              error: err,
+            });
           });
       })
       .catch(err => {
-        // failed to retrieve user profile
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // failed to retrieve profile
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: profile.service.js');
+        crashlytics().log('method: dbProfile.retrieveUserProfile()');
+        crashlytics().log('summary: unable to retrieve profile');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to retrieve profile',
+          error: err,
+        });
       });
   });
 };
@@ -141,8 +189,15 @@ export const deleteProfile = () => {
       })
       .catch(err => {
         // failed to delete profile
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: profile.service.js');
+        crashlytics().log('method: dbProfile.deleteAllProfile()');
+        crashlytics().log('summary: unable to delete profile');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to delete profile',
+          error: err,
+        });
       });
   });
 };
@@ -155,7 +210,11 @@ const generateUUID = () => {
       })
       .catch(err => {
         // failed to generate UUID
-        // TODO firebase crashlytics (crash report)
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: profile.service.js');
+        crashlytics().log('method: UUIDGenerator.getRandomUUID()');
+        crashlytics().log('summary: unable to generate UUID');
+        crashlytics().recordError(err);
         reject(err);
       });
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {View, Text, StyleSheet, Platform, Alert} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 // redux
 import {store} from '../redux/store';
@@ -10,15 +10,14 @@ import * as servicePayslip from '../services/payslip.service';
 import * as serviceRedux from '../services/redux.service';
 
 // Logout user
-onDeleteProfile = () => {
+onDeleteProfile = props => {
   serviceProfile
     .deleteProfile()
     .then(userProfile => {
       servicePayslip
         .clearAllPayslipTemplate()
         .then(resp => {
-          console.log('user profile deleted');
-          console.log(userProfile);
+          // user profile deleted
           servicePayslip
             .clearAllPayslip()
             .then(resp => {
@@ -28,16 +27,35 @@ onDeleteProfile = () => {
               });
             })
             .catch(err => {
-              console.log(err);
+              // unable to clear all payslip
+              // alert user and redirect to 'Home'
+              this.signOutErrorAlert(props);
             });
         })
         .catch(err => {
-          console.log(err);
+          // unable to clear all payslip template
+          // alert user and redirect to 'Home'
+          this.signOutErrorAlert(props);
         });
     })
     .catch(err => {
-      console.log(err);
+      // unable to delete user profile
+      // alert user and redirect to 'Home'
+      this.signOutErrorAlert(props);
     });
+};
+
+signOutErrorAlert = props => {
+  Alert.alert(
+    'Alert',
+    'Something wrong with the system, unable to signout, issue will be automatically reported for remedy',
+    [
+      {
+        text: 'OK',
+        onPress: () => props.navigation.navigate('Home'),
+      },
+    ],
+  );
 };
 
 export function DrawerContent(props) {
@@ -78,7 +96,7 @@ export function DrawerContent(props) {
         </View>
       </DrawerContentScrollView>
       <View style={styles.bottomDrawerSection}>
-        <DrawerItem label="Sign Out" onPress={() => onDeleteProfile()} />
+        <DrawerItem label="Sign Out" onPress={() => onDeleteProfile(props)} />
       </View>
     </View>
   );

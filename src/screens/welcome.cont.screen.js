@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 // styles
 import commonStyles from '../styles/common.style';
@@ -40,25 +41,35 @@ class WelcomeContScreen extends Component {
     serviceProfile
       .createProfile(user)
       .then(() => {
-        console.log('user profile created');
+        // user profile created
         servicePayslip
           .calculatePayslipTemplate(data)
           .then(resp => {
-            console.log('template calculated');
-            console.log(JSON.parse(JSON.stringify(resp)));
+            // payslip template created
           })
           .catch(err => {
-            // unable to generare template
-            // // TODO Alert user
-            // console.log(err);
+            // unable to generate template
+            // Alert user due to unable to register profile
+            // TODO CLEAR all profile, payslips, compared payslips, payslip template (v1.1 functions)
+            this.profileRegisterAlertError();
           });
       })
       .catch(err => {
         // unable to create profile
-        // TODO Alert user
-        // console.log(err);
+        // Alert user due to unable to register profile
+        // TODO CLEAR all profile, payslips, compared payslips, payslip template (v1.1 functions)
+        this.profileRegisterAlertError();
       });
   }
+
+  profileRegisterAlertError = () => {
+    Alert.alert('Alert', 'Unable to register profile, please try again later', [
+      {
+        text: 'OK',
+        onPress: () => this.props.navigation.navigate('Welcome'),
+      },
+    ]);
+  };
 
   render() {
     return (

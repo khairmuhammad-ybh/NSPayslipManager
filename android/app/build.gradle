@@ -1,4 +1,11 @@
 apply plugin: "com.android.application"
+// fabric tools plugin
+apply plugin: 'io.fabric'
+// firebase SDK
+apply plugin: 'com.google.gms.google-services'
+// firebase Crashlytics Gradle plugin
+// apply plugin: 'com.google.firebase.crashlytics'
+
 
 import com.android.build.OutputFile
 
@@ -134,6 +141,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -192,6 +200,15 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-vector-icons') // From node_modues (react-native-elements)
+    // firebase SDK
+    // implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    // implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    // // Add the Firebase Crashlytics SDK.
+    // implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
+    
+    def multidex_version = "2.0.1"
+    implementation 'androidx.multidex:multidex:$multidex_version'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

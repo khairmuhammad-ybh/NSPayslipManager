@@ -16,8 +16,7 @@ import {Picker} from '@react-native-community/picker';
 import * as pickers from '../components/picker.component';
 // resources
 import stringResource from '../resources/string.resource';
-// redux
-import {persistor} from '../redux/store';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 class WelcomeScreen extends Component {
   constructor(props) {
@@ -176,7 +175,6 @@ class WelcomeScreen extends Component {
       vocation: this.state.vocationSelected,
     };
 
-    // console.log(user);
     if (this.state.name === '') {
       Alert.alert('Invalid Fields', 'Please enter your name');
     } else {

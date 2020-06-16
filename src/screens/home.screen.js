@@ -25,13 +25,20 @@ class HomeScreen extends Component {
       .retrieveComparedPayslips()
       .then(resp => {
         // success data fetch and store inside redux
-        // console.log(resp)
         this.setState({
           refreshing: false,
         });
       })
       .catch(err => {
-        console.log(err);
+        Alert.alert(
+          'Alert',
+          'Something went wrong while retrieving your payslips, please try again later',
+          [
+            {
+              text: 'OK',
+            },
+          ],
+        );
       });
   }
 
@@ -40,7 +47,7 @@ class HomeScreen extends Component {
   };
 
   onPress = payslip => {
-    // console.log(payslip._id)
+    // currently not in use in v1.0
   };
 
   render() {

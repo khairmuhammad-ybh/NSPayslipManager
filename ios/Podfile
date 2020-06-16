@@ -1,6 +1,11 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+# Firebase SDK
+pod 'Firebase/Crashlytics'
+# Recommended: Add the Firebase pod for Google Analytics
+pod 'Firebase/Analytics'
+
 def add_flipper_pods!(versions = {})
   versions['Flipper'] ||= '~> 0.33.1'
   versions['DoubleConversion'] ||= '1.1.7'

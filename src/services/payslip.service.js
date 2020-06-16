@@ -4,6 +4,8 @@ import * as Actions from '../redux/actions';
 import UUIDGenerator from 'react-native-uuid-generator';
 // datasource
 import * as dbPayslip from '../datasource/payslip.datasource';
+// google-crashlytics
+import crashlytics from '@react-native-firebase/crashlytics';
 
 // payslip template (CRUD) functions
 export const calculatePayslipTemplate = data => {
@@ -49,14 +51,22 @@ export const calculatePayslipTemplate = data => {
         .then(resp => {
           // success
           // update login state in redux
-          // console.log(newPayslipTemplate)
           store.dispatch(Actions.update_first_launch());
           resolve(resp);
         })
         .catch(err => {
           //  error
-          // TODO firebase crashlytics (crash report)
-          reject(err);
+          // firebase crashlytics (crash report)
+          crashlytics().log('source: payslip.service.js');
+          crashlytics().log(
+            'method: dbPayslip.calculatePayslipTemplate(newPayslipTemplate)',
+          );
+          crashlytics().log('summary: unable to calculate payslip template');
+          crashlytics().recordError(err);
+          reject({
+            message: 'unable to calculate payslip template',
+            error: err,
+          });
         });
     });
   });
@@ -68,7 +78,6 @@ export const retrievePayslipTemplate = () => {
       .retrievePayslipTemplate()
       .then(resp => {
         // success registered
-        // console.log(`total number of payslips' template: ${resp.length}`)  // logging total number of template
         payslipsObj = JSON.parse(JSON.stringify(resp));
         let newPayslips = [];
         Object.keys(payslipsObj).forEach(element => {
@@ -78,8 +87,15 @@ export const retrievePayslipTemplate = () => {
       })
       .catch(err => {
         // failed to register
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: dbPayslip.retrievePayslipTemplate()');
+        crashlytics().log('summary: unable to retrieve payslip template');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to retrieve payslip template',
+          error: err,
+        });
       });
   });
 };
@@ -89,14 +105,20 @@ export const clearAllPayslipTemplate = () => {
     dbPayslip
       .resetPayslipTemplate()
       .then(resp => {
-        console.log(`all payslips' template removed`);
-        console.log(`total number of payslips' template: ${resp.length}`);
+        // all payslip template removed
         resolve(JSON.parse(JSON.stringify(resp)));
       })
       .catch(err => {
         // payslip template error
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: dbPayslip.resetPayslipTemplate()');
+        crashlytics().log('summary: unable to reset payslip template');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to reset payslip template',
+          error: err,
+        });
       });
   });
 };
@@ -122,7 +144,6 @@ export const recalculatePayslipTemplate = (data, type) => {
       .retrievePayslipTemplate()
       .then(resp => {
         // success registered
-        // console.log(`total number of payslips' template: ${resp.length}`)  // logging total number of template
         let payslipsObj = JSON.parse(JSON.stringify(resp));
         let _id = payslipsObj[0]._id;
 
@@ -140,11 +161,9 @@ export const recalculatePayslipTemplate = (data, type) => {
 
         let updatedPayslipTemplate = {};
 
-        console.log(type);
-
         if (type == 'add') {
           updatedPayslipTemplate = {
-            _id: payslipsObj[0]._id,
+            _id: _id,
             vocationAllowance: parseFloat(vocationAllowance).toFixed(2),
             mealAllowance: parseFloat(data.mealAllowance).toFixed(2),
             otherAllowance: parseFloat(otherAllowance).toFixed(2),
@@ -174,14 +193,30 @@ export const recalculatePayslipTemplate = (data, type) => {
           })
           .catch(err => {
             //  error
-            // TODO firebase crashlytics (crash report)
-            reject(err);
+            // firebase crashlytics (crash report)
+            crashlytics().log('source: payslip.service.js');
+            crashlytics().log(
+              'method: dbPayslip.recalculatePayslipTemplate(updatedPayslipTemplate)',
+            );
+            crashlytics().log('summary: unable to retrieve payslip template');
+            crashlytics().recordError(err);
+            reject({
+              message: 'unable to retrieve payslip template',
+              error: err,
+            });
           });
       })
       .catch(err => {
-        // failed to register
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // failed to retrieve payslip template
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: dbPayslip.retrievePayslipTemplate()');
+        crashlytics().log('summary: unable to retrieve payslip template');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to retrieve payslip template',
+          error: err,
+        });
       });
   });
 };
@@ -293,14 +328,33 @@ export const calculatePayslip = (data, expectedPayslip) => {
               })
               .catch(err => {
                 // unable to calculate payslip error
-                // TODO firebase crashlytics (crash report)
-                reject(err);
+                // firebase crashlytics (crash report)
+                crashlytics().log('source: payslip.service.js');
+                crashlytics().log(
+                  'method: dbPayslip.calculateComparedPayslip(comparedPayslip)',
+                );
+                crashlytics().log(
+                  'summary: unable to calculate compared payslip',
+                );
+                crashlytics().recordError(err);
+                reject({
+                  message: 'unable to calculate compared payslip',
+                  error: err,
+                });
               });
           });
         })
         .catch(err => {
-          //  error
-          reject(err);
+          // error
+          // firebase crashlytics (crash report)
+          crashlytics().log('source: payslip.service.js');
+          crashlytics().log('method: dbPayslip.calculatePayslip(newPayslip)');
+          crashlytics().log('summary: unable to calculate payslip');
+          crashlytics().recordError(err);
+          reject({
+            message: 'unable to calculate payslip',
+            error: err,
+          });
         });
     });
   });
@@ -312,7 +366,6 @@ export const retrievePayslips = () => {
       .retrievePayslip()
       .then(resp => {
         // success payslip retrieved
-        // console.log(`total number of payslips' template: ${resp.length}`)  // logging total number of template
         let payslipsObj = JSON.parse(JSON.stringify(resp));
         let newPayslips = [];
         Object.keys(payslipsObj).forEach(element => {
@@ -322,8 +375,15 @@ export const retrievePayslips = () => {
       })
       .catch(err => {
         // failed to retrieve payslips
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: dbPayslip.retrievePayslip()');
+        crashlytics().log('summary: unable to retrieve payslip');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to retrieve payslip',
+          error: err,
+        });
       });
   });
 };
@@ -333,25 +393,37 @@ export const clearAllPayslip = () => {
     dbPayslip
       .resetPayslip()
       .then(resp => {
-        console.log(`all payslips removed`);
-        console.log(`total number of payslips: ${resp.length}`);
+        // all payslips removed
         dbPayslip
           .resetComparedPayslip()
           .then(resp => {
-            console.log(`all compared payslips removed`);
-            console.log(`total number of compared payslips: ${resp.length}`);
+            // all compared payslips removed
             resolve();
           })
           .catch(err => {
             // compared payslip reset error
-            // TODO firebase crashlytics (crash report)
-            reject(err);
+            // firebase crashlytics (crash report)
+            crashlytics().log('source: payslip.service.js');
+            crashlytics().log('method: dbPayslip.resetComparedPayslip()');
+            crashlytics().log('summary: unable to reset compared payslip');
+            crashlytics().recordError(err);
+            reject({
+              message: 'unable to reset compared payslip',
+              error: err,
+            });
           });
       })
       .catch(err => {
         // payslip reset error
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: dbPayslip.resetPayslip()');
+        crashlytics().log('summary: unable to reset payslip');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to reset payslip',
+          error: err,
+        });
       });
   });
 };
@@ -363,7 +435,6 @@ export const retrieveComparedPayslips = () => {
       .retrieveComparedPayslip()
       .then(resp => {
         // success retrieving compared payslips
-        // console.log(`total number of payslips' template: ${resp.length}`)  // logging total number of template
         let payslipsComparedObj = JSON.parse(JSON.stringify(resp));
         let newPayslipsCompared = [];
         Object.keys(payslipsComparedObj).forEach(element => {
@@ -374,8 +445,15 @@ export const retrieveComparedPayslips = () => {
       })
       .catch(err => {
         // failed to retrieve compared payslip
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: dbPayslip.retrieveComparedPayslip()');
+        crashlytics().log('summary: unable to retrieve compared payslip');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to retrieve compared payslip',
+          error: err,
+        });
       });
   });
 };
@@ -394,14 +472,34 @@ export const removeSingleComparedPayslip = comparedPayslip => {
           })
           .catch(err => {
             // failed to remove compared payslip
-            // TODO firebase crashlytics (crash report)
-            reject(err);
+            // firebase crashlytics (crash report)
+            crashlytics().log('source: payslip.service.js');
+            crashlytics().log(
+              'method: dbPayslip.removeSingleComparedPayslip(comparedPayslip._id)',
+            );
+            crashlytics().log(
+              'summary: unable to remove single compared payslip',
+            );
+            crashlytics().recordError(err);
+            reject({
+              message: 'unable to remove single compared payslip',
+              error: err,
+            });
           });
       })
       .catch(err => {
         // failed to remove payslip
-        // TODO firebase crashlytics (crash report)
-        reject(err);
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log(
+          'method: dbPayslip.removeSinglePayslip(comparedPayslip.refPayslip)',
+        );
+        crashlytics().log('summary: unable to remove single payslip');
+        crashlytics().recordError(err);
+        reject({
+          message: 'unable to remove single payslip',
+          error: err,
+        });
       });
   });
 };
@@ -414,7 +512,11 @@ const generateUUID = () => {
       })
       .catch(err => {
         // failed to generate UUID
-        /// TODO firebase crashlytics (crash report)
+        // firebase crashlytics (crash report)
+        crashlytics().log('source: payslip.service.js');
+        crashlytics().log('method: UUIDGenerator.getRandomUUID()');
+        crashlytics().log('summary: unable to generate UUID');
+        crashlytics().recordError(err);
         reject(err);
       });
   });

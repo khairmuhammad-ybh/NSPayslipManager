@@ -36,7 +36,15 @@ class PayslipCard extends Component {
             this.deleteNode(this.state.activeRow);
           })
           .catch(err => {
-            console.log(err);
+            Alert.alert(
+              'Alert',
+              'Something went wrong while deleting payslip, crash report will be send automatically for fix',
+              [
+                {
+                  text: 'OK',
+                },
+              ],
+            );
           });
       },
     },

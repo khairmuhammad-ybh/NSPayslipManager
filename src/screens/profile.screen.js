@@ -137,13 +137,20 @@ class ProfileScreen extends Component {
         .updateProfile(data)
         .then(resp => {
           // update success update profile
-          // TODO Alert user
           this.props.navigation.goBack();
         })
         .catch(err => {
           // unable to update profile
-          // TODO Alert user
-          console.log(err);
+          // Alert user due to unable to update profile
+          Alert.alert(
+            'Alert',
+            'Something went wrong while updating your profile, please try again',
+            [
+              {
+                text: 'OK',
+              },
+            ],
+          );
         });
     }
   };

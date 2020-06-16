@@ -105,14 +105,13 @@ export const calculatePayslip = newPayslip => {
     Realm.open(payslipDbOptions)
       .then(realm => {
         let allPayslips = realm.objects(payslipSchema.name);
-        console.log(JSON.parse(JSON.stringify(allPayslips)));
         let payslips = allPayslips.filtered(
           `date.month = \"${newPayslip.date.month}\" AND date.year = \"${
             newPayslip.date.year
           }\"`,
         );
         if (payslips.length > 0) {
-          // console.log('duplicate card')
+          // duplicate payslip card
           reject({error: 'payslip has been added', data: payslips.length});
         } else {
           //   write new payslip into database

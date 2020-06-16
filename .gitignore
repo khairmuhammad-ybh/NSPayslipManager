@@ -60,3 +60,7 @@ buck-out/
 
 # VSCode
 *.vscode
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+GoogleService-Info.plist

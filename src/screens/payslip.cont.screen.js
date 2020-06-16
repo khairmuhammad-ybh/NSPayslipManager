@@ -43,15 +43,16 @@ class PayslipContScreen extends Component {
         )
         .then(resp => {
           let expectedPayslip = resp;
-          // console.log(data)
           // calculate payslip
           servicePayslip
             .calculatePayslip(data, expectedPayslip)
             .then(resp => {
+              // success calculate payslip
               this.props.navigation.navigate('Home');
             })
             .catch(err => {
               // duplicate payslip
+              // Alert user to remove current payslip, before creating new one
               Alert.alert(
                 'Alert',
                 `duplicate payslip, please remove the current payslip before adding new one.` +
@@ -63,14 +64,21 @@ class PayslipContScreen extends Component {
                   },
                 ],
               );
-
-              // console.log(err);
             });
         })
         .catch(err => {
           // recalculate payslip template error
-          // TODO Alert user
-          // console.log(err);
+          // Alert user to retry input their payslip
+          Alert.alert(
+            'Alert',
+            'Something went wrong in calculating your payslip, please try again',
+            [
+              {
+                text: 'OK',
+                onPress: () => this.props.navigation.navigate('AddPayslip'),
+              },
+            ],
+          );
         });
     }
   }
