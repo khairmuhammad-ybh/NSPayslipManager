@@ -124,8 +124,7 @@ class PayslipScreen extends Component {
     if (
       this.state.rankPaySelected == 0 ||
       this.state.mealAmount == 0 ||
-      this.state.deductionAmount == 0 ||
-      this.state.claimAmount == 0
+      this.state.deductionAmount == 0
     ) {
       Alert.alert(
         'Incomplete fields',
@@ -227,7 +226,8 @@ class PayslipScreen extends Component {
                 }>
                 <TextInput
                   style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
-                  keyboardType={'number-pad'}
+                  keyboardType={'numeric'}
+                  returnKeyType={'go'}
                   placeholder={
                     stringResource.formHeaders.payslip_subPlaceholder[2]
                   }
@@ -256,6 +256,7 @@ class PayslipScreen extends Component {
                 <TextInput
                   style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                   keyboardType={'numeric'}
+                  returnKeyType={'next'}
                   placeholder={
                     stringResource.formHeaders.payslip_subPlaceholder[3]
                   }
@@ -284,6 +285,7 @@ class PayslipScreen extends Component {
                 <TextInput
                   style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                   keyboardType={'numeric'}
+                  returnKeyType={'next'}
                   placeholder={
                     stringResource.formHeaders.payslip_subPlaceholder[4]
                   }
@@ -312,6 +314,7 @@ class PayslipScreen extends Component {
                 <TextInput
                   style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
                   keyboardType={'numeric'}
+                  returnKeyType={'done'}
                   placeholder={
                     stringResource.formHeaders.payslip_subPlaceholder[5]
                   }

@@ -149,6 +149,9 @@ class PayslipCard extends Component {
                     parseFloat(payslip.netSalary.actual) >
                     parseFloat(payslip.netSalary.expected)
                       ? {color: 'green'}
+                      : parseFloat(payslip.netSalary.actual) ==
+                        parseFloat(payslip.netSalary.expected)
+                      ? {color: 'black'}
                       : {color: 'red'}
                   }>
                   ${payslip.netSalary.actual}

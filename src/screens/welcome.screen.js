@@ -7,7 +7,9 @@ import {
   KeyboardAvoidingView,
   ActionSheetIOS,
   Alert,
+  Linking,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // styles
 import commonStyles from '../styles/common.style';
 import styles from '../styles/welcome.style';
@@ -16,7 +18,7 @@ import {Picker} from '@react-native-community/picker';
 import * as pickers from '../components/picker.component';
 // resources
 import stringResource from '../resources/string.resource';
-import crashlytics from '@react-native-firebase/crashlytics';
+import {CheckBox} from 'react-native-elements';
 
 class WelcomeScreen extends Component {
   constructor(props) {
@@ -27,7 +29,9 @@ class WelcomeScreen extends Component {
       rankNameSelected: 'SC2', // SC2
       rankPaySelected: '600', // 600
       name: '',
-      vocationSelected: 'SLP', // SLP
+      vocationSelected: 'SLP', // SLP,
+      privacyChecked: false,
+      termsChecked: false,
     };
   }
 
@@ -177,9 +181,23 @@ class WelcomeScreen extends Component {
 
     if (this.state.name === '') {
       Alert.alert('Invalid Fields', 'Please enter your name');
+    } else if(!this.state.privacyChecked || !this.state.termsChecked) {
+      Alert.alert('Alert', 'Please read and accept the policies before continue')
     } else {
       this.props.navigation.navigate('WelcomeCont', user);
     }
+  };
+
+  onCheckedPrivacyPolicy = () => {
+    this.setState({
+      privacyChecked: !this.state.privacyChecked,
+    });
+  };
+
+  onCheckedTermsAndCondition = () => {
+    this.setState({
+      termsChecked: !this.state.termsChecked,
+    });
   };
 
   render() {
@@ -189,11 +207,8 @@ class WelcomeScreen extends Component {
     let rankItems = pickers.pickerRank();
 
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        enabled
-        keyboardVerticalOffset={-100}
-        style={styles.keyboard}>
+      <KeyboardAwareScrollView
+      contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
         {/* Main container */}
         <View style={commonStyles.container}>
           {/* Top header */}
@@ -313,6 +328,39 @@ class WelcomeScreen extends Component {
                 </Picker>
               )}
             </View>
+            <View>
+              <Text style={styles.policies}>{stringResource.formHeaders.welcome_policies_acceptance}</Text>
+              <CheckBox
+                title="I've read the Privacy policy"
+                checked={this.state.privacyChecked}
+                onIconPress={() => this.onCheckedPrivacyPolicy()}
+                onPress={() =>
+                  Linking.openURL(
+                    stringResource.applicationInfo.links.privacy_policy,
+                  )
+                }
+                containerStyle={{
+                  backgroundColor: 'transparent',
+                  borderColor: 'transparent',
+                }}
+                textStyle={{color: 'blue'}}
+              />
+              <CheckBox
+                title="I've read the Terms & Condition"
+                checked={this.state.termsChecked}
+                onIconPress={() => this.onCheckedTermsAndCondition()}
+                onPress={() =>
+                  Linking.openURL(
+                    stringResource.applicationInfo.links.terms_and_condition,
+                  )
+                }
+                containerStyle={{
+                  backgroundColor: 'transparent',
+                  borderColor: 'transparent',
+                }}
+                textStyle={{color: 'blue'}}
+              />
+            </View>
             {/* Register profile button */}
             {/* button - continue */}
             <TouchableOpacity
@@ -324,7 +372,7 @@ class WelcomeScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     );
   }
 }

@@ -7,6 +7,10 @@ import {DrawerActions} from '@react-navigation/native';
 // screen
 import PayslipScreen from '../screens/payslip.screen';
 import PayslipContScreen from '../screens/payslip.cont.screen';
+// setting screens
+import AppInfoScreen from '../screens/appinfo.screen';
+import HowItWorkScreen from '../screens/howitwork.screen';
+import ContactUsScreen from '../screens/contactus.screen';
 // Icons
 import {Icon} from 'react-native-elements';
 // styles
@@ -44,6 +48,29 @@ function AppStack() {
         component={PayslipContScreen}
         options={{
           title: '',
+        }}
+      />
+      {/* Settings related screens */}
+      <Stack.Screen
+        name="AppInfo"
+        component={AppInfoScreen}
+        options={{
+          headerBackTitle: 'Settings',
+          title: 'Application Info'
+        }}
+      />
+      <Stack.Screen
+        name="How it Work?"
+        component={HowItWorkScreen}
+        options={{
+          headerBackTitle: 'Settings'
+        }}
+      />
+      <Stack.Screen
+        name="Contact Us"
+        component={ContactUsScreen}
+        options={{
+          headerBackTitle: 'Settings'
         }}
       />
     </Stack.Navigator>
@@ -84,13 +111,7 @@ const homeOptions = (navigation, routeState) => ({
 });
 
 const defaultOptions = (navigation, routeState) => ({
-  headerTitle: () => (
-    <View style={styles.headerTitleAlignment}>
-      <Text style={styles.headerTitle}>
-        {routeState.routeNames[routeState.index]}
-      </Text>
-    </View>
-  ),
+  headerTitle: routeState.routeNames[routeState.index],
   headerLeft: () => (
     <TouchableOpacity
       style={

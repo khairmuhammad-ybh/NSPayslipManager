@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // styles
 import commonStyles from '../styles/common.style';
 import styles from '../styles/welcome.style';
@@ -85,11 +86,8 @@ class PayslipContScreen extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        enabled
-        keyboardVerticalOffset={-100}
-        style={styles.keyboard}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
         {/* Main container */}
         <View style={commonStyles.container}>
           {/* Top header */}
@@ -103,12 +101,13 @@ class PayslipContScreen extends Component {
             {/* Input name */}
             <View>
               <Text style={styles.inputHeader}>
-                {stringResource.formHeaders.payslip_subHeaders[5]}
+                {stringResource.formHeaders.payslip_subHeaders[6]}
               </Text>
               <TextInput
                 style={styles.inputText}
-                keyboardType={'number-pad'}
-                placeholder={`Total ${stringResource.formHeaders.payslip_subHeaders[5].toLowerCase()}`}
+                keyboardType={'numeric'}
+                returnKeyType={'done'}
+                placeholder={`Total ${stringResource.formHeaders.payslip_subHeaders[6].toLowerCase()}`}
                 onChangeText={mealAmount => this.onMealAmountChange(mealAmount)}
               />
             </View>
@@ -123,7 +122,7 @@ class PayslipContScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     );
   }
 }

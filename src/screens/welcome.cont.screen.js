@@ -88,13 +88,14 @@ class WelcomeContScreen extends Component {
           </View>
           {/* Middle content */}
           <View style={styles.middleContainer}>
-            {/* Input name */}
+            {/* Input total deduction */}
             <View>
               <Text style={styles.inputHeader}>
                 {stringResource.formHeaders.welcome_otherHeaders[0]}
               </Text>
               <TextInput
                 style={styles.inputText}
+                keyboardType={'number-pad'}
                 placeholder={`${
                   stringResource.formHeaders.welcome_otherPlaceholders[0]
                 } (Default: $${this.state.deductionAmount})`}

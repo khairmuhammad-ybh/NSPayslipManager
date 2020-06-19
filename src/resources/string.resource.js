@@ -4,6 +4,31 @@ const stringResource = {
     developer: 'Muhammad Khairi',
     github: 'NSPayslipManager@Github',
     version: '1.0',
+    links: {
+      developer: 'https://khairmuhammad-ybh.github.io',
+      github: 'https://github.com/khairmuhammad-ybh/NSPayslipManager',
+      license: '',
+      privacy_policy:
+        'https://khairmuhammad-ybh.github.io/policies/nspsm/nspsm-privacy-policy.html',
+      terms_and_condition:
+        'https://khairmuhammad-ybh.github.io/policies/nspsm/nspsm-terms-and-condition.html',
+    },
+  },
+  settingScreen: {
+    options: [
+      'Contact Us',
+      'Terms and Privacy Policy',
+      'How it work?',
+      'App Info',
+      'Rate Us',
+    ],
+  },
+  howItWorkScreen: {
+    header: 'How we calculate your payslip'
+  },
+  contactUs: {
+    options: ['Send Feedback', 'Ask Question', 'Report Error'],
+    email: 'khairmuhammad.ybh@gmail.com'
   },
   aboutContent: {
     disclaimer: {
@@ -24,6 +49,7 @@ const stringResource = {
     welcome_buttons: ['Continue', 'Register Profile'],
     welcome_otherHeaders: ['Deduction (if applicable)'],
     welcome_otherPlaceholders: ['Total deduction'],
+    welcome_policies_acceptance: ['By registering, you agreed and accepted to the policies implies to you'],
     // Profile screen
     profile_mainHeaders: ['Update My Profile'],
     profile_sub_headers: ['Name', 'Rank', 'Vocation'],

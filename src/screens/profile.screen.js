@@ -8,6 +8,7 @@ import {
   ActionSheetIOS,
   Alert,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // styles
 import commonStyles from '../styles/common.style';
 import styles from '../styles/profile.style';
@@ -160,11 +161,8 @@ class ProfileScreen extends Component {
     let vocationItems = pickers.pickerVocation();
 
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        enabled
-        keyboardVerticalOffset={-100}
-        style={styles.keyboard}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
         {/* Main container */}
         <View style={commonStyles.container}>
           {/* Top header */}
@@ -241,7 +239,7 @@ class ProfileScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     );
   }
 }

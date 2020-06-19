@@ -8,6 +8,8 @@ import * as Actions from '../redux/actions';
 import * as serviceProfile from '../services/profile.service';
 import * as servicePayslip from '../services/payslip.service';
 import * as serviceRedux from '../services/redux.service';
+// Icon
+import {Icon} from 'react-native-elements';
 
 // Logout user
 onDeleteProfile = props => {
@@ -83,20 +85,55 @@ export function DrawerContent(props) {
             <DrawerItem
               label="Home"
               onPress={() => props.navigation.navigate('Home')}
+              icon={({color, size}) => (
+                <Icon
+                  type="ionicon"
+                  name={Platform.OS == 'ios' ? 'ios-home' : 'md-home'}
+                  size={size}
+                  color={color}
+                />
+              )}
             />
             <DrawerItem
               label="Update Profile"
               onPress={() => props.navigation.navigate('Profile')}
+              icon={({color, size}) => (
+                <Icon
+                  type="ionicon"
+                  name={Platform.OS == 'ios' ? 'ios-person' : 'md-person'}
+                  size={size}
+                  color={color}
+                />
+              )}
             />
             <DrawerItem
-              label="About"
-              onPress={() => props.navigation.navigate('About')}
+              label="Settings"
+              onPress={() => props.navigation.navigate('Settings')}
+              icon={({color, size}) => (
+                <Icon
+                  type="ionicon"
+                  name={Platform.OS == 'ios' ? 'ios-settings' : 'md-settings'}
+                  size={size}
+                  color={color}
+                />
+              )}
             />
           </View>
         </View>
       </DrawerContentScrollView>
       <View style={styles.bottomDrawerSection}>
-        <DrawerItem label="Sign Out" onPress={() => onDeleteProfile(props)} />
+        <DrawerItem
+          label="Sign Out"
+          onPress={() => onDeleteProfile(props)}
+          icon={({color, size}) => (
+            <Icon
+              type="octicon"
+              name={'sign-out'}
+              size={size}
+              color={color}
+            />
+          )}
+        />
       </View>
     </View>
   );
