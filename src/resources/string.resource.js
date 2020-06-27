@@ -24,11 +24,11 @@ const stringResource = {
     ],
   },
   howItWorkScreen: {
-    header: 'How we calculate your payslip'
+    header: 'How we calculate your payslip',
   },
   contactUs: {
     options: ['Send Feedback', 'Ask Question', 'Report Error'],
-    email: 'khairmuhammad.ybh@gmail.com'
+    email: 'khairmuhammad.ybh@gmail.com',
   },
   aboutContent: {
     disclaimer: {
@@ -49,7 +49,9 @@ const stringResource = {
     welcome_buttons: ['Continue', 'Register Profile'],
     welcome_otherHeaders: ['Deduction (if applicable)'],
     welcome_otherPlaceholders: ['Total deduction'],
-    welcome_policies_acceptance: ['By registering, you agreed and accepted to the policies implies to you'],
+    welcome_policies_acceptance: [
+      'By registering, you agreed and accepted to the policies implies to you',
+    ],
     // Profile screen
     profile_mainHeaders: ['Update My Profile'],
     profile_sub_headers: ['Name', 'Rank', 'Vocation'],
@@ -71,11 +73,11 @@ const stringResource = {
     payslip_subPlaceholder: [
       '',
       '',
-      'Total amount rank pay',
-      'Total amount meal allowance',
-      'Total amount deductions',
-      'Total amount claim/others',
-      'Total expected meal allowance',
+      'Basic salary amount',
+      'Other Allowance - Vocation Allowance',
+      'Default is always $1',
+      'Default is always $0',
+      '5 * Total no. of meal units',
     ],
     payslip_buttons: ['Continue', 'Calculate Payslip'],
   },

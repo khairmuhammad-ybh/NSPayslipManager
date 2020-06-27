@@ -7,9 +7,11 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // styles
 import commonStyles from '../styles/common.style';
 import styles from '../styles/welcome.style';
+import payslipStyles from '../styles/payslip.style';
 // resources
 import stringResource from '../resources/string.resource';
 // services
@@ -25,9 +27,15 @@ class WelcomeContScreen extends Component {
   }
 
   onDeductionAmountChange(value) {
-    this.setState({
-      deductionAmount: value,
-    });
+    if (value == '') {
+      this.setState({
+        deductionAmount: 1,
+      });
+    } else {
+      this.setState({
+        deductionAmount: value,
+      });
+    }
   }
 
   onRegisterProfile() {
@@ -73,11 +81,8 @@ class WelcomeContScreen extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        enabled
-        keyboardVerticalOffset={-100}
-        style={styles.keyboard}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
         {/* Main container */}
         <View style={commonStyles.container}>
           {/* Top header */}
@@ -93,16 +98,31 @@ class WelcomeContScreen extends Component {
               <Text style={styles.inputHeader}>
                 {stringResource.formHeaders.welcome_otherHeaders[0]}
               </Text>
-              <TextInput
-                style={styles.inputText}
-                keyboardType={'number-pad'}
-                placeholder={`${
-                  stringResource.formHeaders.welcome_otherPlaceholders[0]
-                } (Default: $${this.state.deductionAmount})`}
-                onChangeText={deductionAmount =>
-                  this.onDeductionAmountChange(deductionAmount)
-                }
-              />
+              <View
+                style={
+                  Platform.OS == 'ios'
+                    ? [
+                        payslipStyles.inputFullTextIOS,
+                        payslipStyles.inputTooltip,
+                      ]
+                    : [payslipStyles.inputFullText, payslipStyles.inputTooltip]
+                }>
+                <Text style={payslipStyles.currencySymbol}>$</Text>
+                <TextInput
+                  style={
+                    Platform.OS == 'ios'
+                      ? [payslipStyles.textStyleIOS, payslipStyles.inputStyles]
+                      : payslipStyles.inputStyles
+                  }
+                  keyboardType={'number-pad'}
+                  placeholder={`${
+                    stringResource.formHeaders.welcome_otherPlaceholders[0]
+                  } (Default: $${this.state.deductionAmount})`}
+                  onChangeText={deductionAmount =>
+                    this.onDeductionAmountChange(deductionAmount)
+                  }
+                />
+              </View>
             </View>
             {/* Register profile button */}
             {/* button - continue */}
@@ -115,7 +135,7 @@ class WelcomeContScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     );
   }
 }

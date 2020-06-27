@@ -11,6 +11,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // styles
 import commonStyles from '../styles/common.style';
 import styles from '../styles/welcome.style';
+import payslipStyles from '../styles/payslip.style';
 // resources
 import stringResource from '../resources/string.resource';
 // service
@@ -103,13 +104,30 @@ class PayslipContScreen extends Component {
               <Text style={styles.inputHeader}>
                 {stringResource.formHeaders.payslip_subHeaders[6]}
               </Text>
-              <TextInput
-                style={styles.inputText}
-                keyboardType={'numeric'}
-                returnKeyType={'done'}
-                placeholder={`Total ${stringResource.formHeaders.payslip_subHeaders[6].toLowerCase()}`}
-                onChangeText={mealAmount => this.onMealAmountChange(mealAmount)}
-              />
+              <View
+                style={
+                  Platform.OS == 'ios'
+                    ? [
+                        payslipStyles.inputFullTextIOS,
+                        payslipStyles.inputTooltip,
+                      ]
+                    : [payslipStyles.inputFullText, payslipStyles.inputTooltip]
+                }>
+                <Text style={payslipStyles.currencySymbol}>$</Text>
+                <TextInput
+                  style={
+                    Platform.OS == 'ios'
+                      ? [payslipStyles.textStyleIOS, payslipStyles.inputStyles]
+                      : payslipStyles.inputStyles
+                  }
+                  keyboardType={'numeric'}
+                  returnKeyType={'done'}
+                  placeholder={stringResource.formHeaders.payslip_subPlaceholder[6].toLowerCase()}
+                  onChangeText={mealAmount =>
+                    this.onMealAmountChange(mealAmount)
+                  }
+                />
+              </View>
             </View>
             {/* Register profile button */}
             {/* button - continue */}

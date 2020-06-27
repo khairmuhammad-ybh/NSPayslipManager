@@ -181,8 +181,11 @@ class WelcomeScreen extends Component {
 
     if (this.state.name === '') {
       Alert.alert('Invalid Fields', 'Please enter your name');
-    } else if(!this.state.privacyChecked || !this.state.termsChecked) {
-      Alert.alert('Alert', 'Please read and accept the policies before continue')
+    } else if (!this.state.privacyChecked || !this.state.termsChecked) {
+      Alert.alert(
+        'Alert',
+        'Please read and accept the policies before continue',
+      );
     } else {
       this.props.navigation.navigate('WelcomeCont', user);
     }
@@ -208,7 +211,7 @@ class WelcomeScreen extends Component {
 
     return (
       <KeyboardAwareScrollView
-      contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
+        contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
         {/* Main container */}
         <View style={commonStyles.container}>
           {/* Top header */}
@@ -329,7 +332,9 @@ class WelcomeScreen extends Component {
               )}
             </View>
             <View>
-              <Text style={styles.policies}>{stringResource.formHeaders.welcome_policies_acceptance}</Text>
+              <Text style={styles.policies}>
+                {stringResource.formHeaders.welcome_policies_acceptance}
+              </Text>
               <CheckBox
                 title="I've read the Privacy policy"
                 checked={this.state.privacyChecked}
@@ -342,6 +347,7 @@ class WelcomeScreen extends Component {
                 containerStyle={{
                   backgroundColor: 'transparent',
                   borderColor: 'transparent',
+                  marginBottom: -10,
                 }}
                 textStyle={{color: 'blue'}}
               />
@@ -357,6 +363,7 @@ class WelcomeScreen extends Component {
                 containerStyle={{
                   backgroundColor: 'transparent',
                   borderColor: 'transparent',
+                  marginTop: 0,
                 }}
                 textStyle={{color: 'blue'}}
               />

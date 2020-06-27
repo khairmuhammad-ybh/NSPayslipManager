@@ -92,7 +92,7 @@ class PayslipCard extends Component {
                   Rank: {payslip.rank.rankName}{' '}
                 </Text>
                 <Text style={styles.cardDetailsText}>Meal: </Text>
-                <Text style={styles.cardDetailsText}>Claim/Others: </Text>
+                <Text style={styles.cardDetailsText}>Claim: </Text>
                 <Text style={styles.cardDetailsText}>Net Salary: </Text>
               </View>
               <View style={styles.valueContainerMid}>

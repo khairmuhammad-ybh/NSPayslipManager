@@ -108,6 +108,14 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     width: Dimensions.get('screen').width - 30,
   },
+  inputTooltip: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  iconTooltip: {
+    marginRight: 15,
+  },
   button: {
     padding: 12,
     borderColor: '#708CB5',
@@ -124,6 +132,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 1.5,
+  },
+  tooltipContainer: {
+    backgroundColor: 'transparent',
+  },
+  tooltipImg: {
+    width: Dimensions.get('screen').width - 50,
+    resizeMode: 'contain',
+    alignItems: 'center',
+  },
+  inputStyles: {
+    flex: 2,
+  },
+  currencySymbol: {
+    marginStart: 10,
   },
 });
 

@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ActionSheetIOS,
   Alert,
+  Image,
+  Dimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // styles
@@ -16,27 +18,39 @@ import {Picker} from '@react-native-community/picker';
 // resources
 import stringResource from '../resources/string.resource';
 import * as pickers from '../components/picker.component';
+// icons
+import {Icon, Tooltip} from 'react-native-elements';
+import tooltip_rank from '../assets/rank_tooltip.png';
+import tooltip_meal from '../assets/meal_tooltip.png';
+import tooltip_deduction from '../assets/deduction_tooltip.png';
+import tooltip_claim from '../assets/claim_tooltip.png';
 
 class PayslipScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rankPaySelected: 0,
+      rankPayValue: 0,
       monthSelected:
         stringResource.pickersContents.pickerMonthContent[
           new Date().getMonth()
         ],
       yearSelected: new Date().getFullYear().toString(),
-      deductionAmount: 0,
+      deductionAmount: 1,
       claimAmount: 0,
       mealAmount: 0,
     };
   }
 
   onRankValueChange(rankValue) {
-    this.setState({
-      rankPaySelected: rankValue,
-    });
+    if (rankValue == '') {
+      this.setState({
+        rankPayValue: 0,
+      });
+    } else {
+      this.setState({
+        rankPayValue: rankValue,
+      });
+    }
   }
 
   onMonthValueChange(value) {
@@ -103,26 +117,44 @@ class PayslipScreen extends Component {
   }
 
   onDeductionValueChange(value) {
-    this.setState({
-      deductionAmount: value,
-    });
+    if (value == '') {
+      this.setState({
+        deductionAmount: 1,
+      });
+    } else {
+      this.setState({
+        deductionAmount: value,
+      });
+    }
   }
 
   onClaimValueChange(value) {
-    this.setState({
-      claimAmount: value,
-    });
+    if (value == '') {
+      this.setState({
+        claimAmount: 0,
+      });
+    } else {
+      this.setState({
+        claimAmount: value,
+      });
+    }
   }
 
   onMealValueChange(value) {
-    this.setState({
-      mealAmount: value,
-    });
+    if (value == '') {
+      this.setState({
+        mealAmount: 0,
+      });
+    } else {
+      this.setState({
+        mealAmount: value,
+      });
+    }
   }
 
   onCalculatePaylip = () => {
     if (
-      this.state.rankPaySelected == 0 ||
+      this.state.rankPayValue == 0 ||
       this.state.mealAmount == 0 ||
       this.state.deductionAmount == 0
     ) {
@@ -132,7 +164,7 @@ class PayslipScreen extends Component {
       );
     } else {
       let data = {
-        rank: this.state.rankPaySelected,
+        rank: this.state.rankPayValue,
         date: {
           month: this.state.monthSelected,
           year: this.state.yearSelected,
@@ -221,11 +253,18 @@ class PayslipScreen extends Component {
               <View
                 style={
                   Platform.OS == 'ios'
-                    ? styles.inputFullTextIOS
-                    : styles.inputFullText
+                    ? [styles.inputFullTextIOS, styles.inputTooltip]
+                    : [styles.inputFullText, styles.inputTooltip]
                 }>
+                <View>
+                  <Text style={styles.currencySymbol}>$</Text>
+                </View>
                 <TextInput
-                  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
+                  style={
+                    Platform.OS == 'ios'
+                      ? [styles.textStyleIOS, styles.inputStyles]
+                      : styles.inputStyles
+                  }
                   keyboardType={'numeric'}
                   returnKeyType={'go'}
                   placeholder={
@@ -240,6 +279,21 @@ class PayslipScreen extends Component {
                   }}
                   blurOnSubmit={false}
                 />
+                <Tooltip
+                  popover={
+                    <Image source={tooltip_rank} style={styles.tooltipImg} />
+                  }
+                  containerStyle={styles.tooltipContainer}
+                  pointerColor={'black'}
+                  width={Dimensions.get('screen').width}>
+                  <Icon
+                    type="simple-line-icon"
+                    name={'question'}
+                    size={25}
+                    color={'black'}
+                    style={styles.iconTooltip}
+                  />
+                </Tooltip>
               </View>
             </View>
             {/* Meal allowance section */}
@@ -250,11 +304,16 @@ class PayslipScreen extends Component {
               <View
                 style={
                   Platform.OS == 'ios'
-                    ? styles.inputFullTextIOS
-                    : styles.inputFullText
+                    ? [styles.inputFullTextIOS, styles.inputTooltip]
+                    : [styles.inputFullText, styles.inputTooltip]
                 }>
+                <Text style={styles.currencySymbol}>$</Text>
                 <TextInput
-                  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
+                  style={
+                    Platform.OS == 'ios'
+                      ? [styles.textStyleIOS, styles.inputStyles]
+                      : styles.inputStyles
+                  }
                   keyboardType={'numeric'}
                   returnKeyType={'next'}
                   placeholder={
@@ -269,6 +328,21 @@ class PayslipScreen extends Component {
                   }}
                   blurOnSubmit={false}
                 />
+                <Tooltip
+                  popover={
+                    <Image source={tooltip_meal} style={styles.tooltipImg} />
+                  }
+                  containerStyle={styles.tooltipContainer}
+                  pointerColor={'black'}
+                  width={Dimensions.get('screen').width}>
+                  <Icon
+                    type="simple-line-icon"
+                    name={'question'}
+                    size={25}
+                    color={'black'}
+                    style={styles.iconTooltip}
+                  />
+                </Tooltip>
               </View>
             </View>
             {/* Deduction section */}
@@ -279,11 +353,16 @@ class PayslipScreen extends Component {
               <View
                 style={
                   Platform.OS == 'ios'
-                    ? styles.inputFullTextIOS
-                    : styles.inputFullText
+                    ? [styles.inputFullTextIOS, styles.inputTooltip]
+                    : [styles.inputFullText, styles.inputTooltip]
                 }>
+                <Text style={styles.currencySymbol}>$</Text>
                 <TextInput
-                  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
+                  style={
+                    Platform.OS == 'ios'
+                      ? [styles.textStyleIOS, styles.inputStyles]
+                      : styles.inputStyles
+                  }
                   keyboardType={'numeric'}
                   returnKeyType={'next'}
                   placeholder={
@@ -298,6 +377,24 @@ class PayslipScreen extends Component {
                   }}
                   blurOnSubmit={false}
                 />
+                <Tooltip
+                  popover={
+                    <Image
+                      source={tooltip_deduction}
+                      style={styles.tooltipImg}
+                    />
+                  }
+                  containerStyle={styles.tooltipContainer}
+                  pointerColor={'black'}
+                  width={Dimensions.get('screen').width}>
+                  <Icon
+                    type="simple-line-icon"
+                    name={'question'}
+                    size={25}
+                    color={'black'}
+                    style={styles.iconTooltip}
+                  />
+                </Tooltip>
               </View>
             </View>
             {/* Claim/others section */}
@@ -308,11 +405,16 @@ class PayslipScreen extends Component {
               <View
                 style={
                   Platform.OS == 'ios'
-                    ? styles.inputFullTextIOS
-                    : styles.inputFullText
+                    ? [styles.inputFullTextIOS, styles.inputTooltip]
+                    : [styles.inputFullText, styles.inputTooltip]
                 }>
+                <Text style={styles.currencySymbol}>$</Text>
                 <TextInput
-                  style={Platform.OS == 'ios' ? styles.textStyleIOS : null}
+                  style={
+                    Platform.OS == 'ios'
+                      ? [styles.textStyleIOS, styles.inputStyles]
+                      : styles.inputStyles
+                  }
                   keyboardType={'numeric'}
                   returnKeyType={'done'}
                   placeholder={
@@ -323,6 +425,21 @@ class PayslipScreen extends Component {
                     this.claim = input;
                   }}
                 />
+                <Tooltip
+                  popover={
+                    <Image source={tooltip_claim} style={styles.tooltipImg} />
+                  }
+                  containerStyle={styles.tooltipContainer}
+                  pointerColor={'black'}
+                  width={Dimensions.get('screen').width}>
+                  <Icon
+                    type="simple-line-icon"
+                    name={'question'}
+                    size={25}
+                    color={'black'}
+                    style={styles.iconTooltip}
+                  />
+                </Tooltip>
               </View>
             </View>
             {/* button - calculate payslip */}
