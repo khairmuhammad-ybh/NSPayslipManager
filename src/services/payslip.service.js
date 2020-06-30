@@ -20,12 +20,24 @@ export const calculatePayslipTemplate = data => {
       let netSalary = parseFloat(grossSalary - totalDeduction);
 
       let current_datetime = new Date();
+      // let formattedDate =
+      //   current_datetime.getDate() +
+      //   '/' +
+      //   (current_datetime.getMonth() + 1) +
+      //   '/' +
+      //   current_datetime.getFullYear() +
+      //   ' ' +
+      //   current_datetime.getHours() +
+      //   ':' +
+      //   current_datetime.getMinutes() +
+      //   ':' +
+      //   current_datetime.getSeconds();
       let formattedDate =
-        current_datetime.getDate() +
-        '/' +
-        (current_datetime.getMonth() + 1) +
-        '/' +
         current_datetime.getFullYear() +
+        '-' +
+        (current_datetime.getMonth() + 1) +
+        '-' +
+        current_datetime.getDate() +
         ' ' +
         current_datetime.getHours() +
         ':' +
@@ -127,18 +139,30 @@ export const clearAllPayslipTemplate = () => {
 export const recalculatePayslipTemplate = (data, type) => {
   return new Promise((resolve, reject) => {
     let current_datetime = new Date();
+    // let formattedDate =
+    //   current_datetime.getDate() +
+    //   '/' +
+    //   (current_datetime.getMonth() + 1) +
+    //   '/' +
+    //   current_datetime.getFullYear() +
+    //   ' ' +
+    //   current_datetime.getHours() +
+    //   ':' +
+    //   current_datetime.getMinutes() +
+    //   ':' +
+    //   current_datetime.getSeconds();
     let formattedDate =
-      current_datetime.getDate() +
-      '/' +
-      (current_datetime.getMonth() + 1) +
-      '/' +
-      current_datetime.getFullYear() +
-      ' ' +
-      current_datetime.getHours() +
-      ':' +
-      current_datetime.getMinutes() +
-      ':' +
-      current_datetime.getSeconds();
+        current_datetime.getFullYear() +
+        '-' +
+        (current_datetime.getMonth() + 1) +
+        '-' +
+        current_datetime.getDate() +
+        ' ' +
+        current_datetime.getHours() +
+        ':' +
+        current_datetime.getMinutes() +
+        ':' +
+        current_datetime.getSeconds();
 
     dbPayslip
       .retrievePayslipTemplate()
@@ -234,12 +258,24 @@ export const calculatePayslip = (data, expectedPayslip) => {
       let netSalary = parseFloat(grossSalary - totalDeduction);
 
       let current_datetime = new Date();
+      // let formattedDate =
+      //   current_datetime.getDate() +
+      //   '/' +
+      //   (current_datetime.getMonth() + 1) +
+      //   '/' +
+      //   current_datetime.getFullYear() +
+      //   ' ' +
+      //   current_datetime.getHours() +
+      //   ':' +
+      //   current_datetime.getMinutes() +
+      //   ':' +
+      //   current_datetime.getSeconds();
       let formattedDate =
-        current_datetime.getDate() +
-        '/' +
-        (current_datetime.getMonth() + 1) +
-        '/' +
         current_datetime.getFullYear() +
+        '-' +
+        (current_datetime.getMonth() + 1) +
+        '-' +
+        current_datetime.getDate() +
         ' ' +
         current_datetime.getHours() +
         ':' +
@@ -278,18 +314,30 @@ export const calculatePayslip = (data, expectedPayslip) => {
               parseFloat(expectedPayslip.netSalary);
 
             let current_datetime = new Date();
+            // let formattedDate =
+            //   current_datetime.getDate() +
+            //   '/' +
+            //   (current_datetime.getMonth() + 1) +
+            //   '/' +
+            //   current_datetime.getFullYear() +
+            //   ' ' +
+            //   current_datetime.getHours() +
+            //   ':' +
+            //   current_datetime.getMinutes() +
+            //   ':' +
+            //   current_datetime.getSeconds();
             let formattedDate =
-              current_datetime.getDate() +
-              '/' +
-              (current_datetime.getMonth() + 1) +
-              '/' +
-              current_datetime.getFullYear() +
-              ' ' +
-              current_datetime.getHours() +
-              ':' +
-              current_datetime.getMinutes() +
-              ':' +
-              current_datetime.getSeconds();
+            current_datetime.getFullYear() +
+            '-' +
+            (current_datetime.getMonth() + 1) +
+            '-' +
+            current_datetime.getDate() +
+            ' ' +
+            current_datetime.getHours() +
+            ':' +
+            current_datetime.getMinutes() +
+            ':' +
+            current_datetime.getSeconds();
 
             let comparedPayslip = {
               _id: dbId,
@@ -428,7 +476,7 @@ export const clearAllPayslip = () => {
   });
 };
 
-// comapared payslip
+// compared payslip
 export const retrieveComparedPayslips = () => {
   return new Promise((resolve, reject) => {
     dbPayslip
@@ -440,7 +488,10 @@ export const retrieveComparedPayslips = () => {
         Object.keys(payslipsComparedObj).forEach(element => {
           newPayslipsCompared.push(payslipsComparedObj[element]);
         });
-        store.dispatch(Actions.populate_payslips(newPayslipsCompared)); // populate in flatview for visualization
+        // Sort payslips in descending order
+        const sortedPayslipsDSC = newPayslipsCompared.slice().sort((a, b) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime())
+
+        store.dispatch(Actions.populate_payslips(sortedPayslipsDSC)); // populate in flatview for visualization
         resolve(JSON.parse(JSON.stringify(resp)));
       })
       .catch(err => {

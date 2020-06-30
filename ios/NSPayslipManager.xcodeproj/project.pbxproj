@@ -10,7 +10,6 @@
 		00E356F31AD99517003FC87E /* NsPayslipManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NsPayslipManagerTests.m */; };
 		0D6166CE4E819D0608DE6224 /* libPods-NsPayslipManager-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F989FBF5739E3F0A7ECA578 /* libPods-NsPayslipManager-tvOSTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		16183B324AFD882AD0B9B9BD /* libPods-NsPayslipManager-NsPayslipManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3176146CDBB3B43155E344 /* libPods-NsPayslipManager-NsPayslipManagerTests.a */; };
@@ -20,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* NsPayslipManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NsPayslipManagerTests.m */; };
 		68F94A83E5A4CC8B2B333889 /* libPods-NsPayslipManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8916BC1AE1023228671521E /* libPods-NsPayslipManager.a */; };
 		C57A9B6F1E84B4130F099299 /* libPods-NsPayslipManager-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 662A929C4F146C67B53DF42F /* libPods-NsPayslipManager-tvOS.a */; };
+		F4FD24B224AB6AAC00E4EF44 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4FD24B424AB6AAC00E4EF44 /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,6 @@
 		13B07F961A680F5B00A75B9A /* NsPayslipManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NsPayslipManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = NsPayslipManager/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = NsPayslipManager/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = NsPayslipManager/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NsPayslipManager/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NsPayslipManager/main.m; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		E828DCEFC0F72B1E76689E15 /* Pods-NsPayslipManager-NsPayslipManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NsPayslipManager-NsPayslipManagerTests.debug.xcconfig"; path = "Target Support Files/Pods-NsPayslipManager-NsPayslipManagerTests/Pods-NsPayslipManager-NsPayslipManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F4FD24B324AB6AAC00E4EF44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F72DBFA6CAC801C63DC6898C /* Pods-NsPayslipManager-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NsPayslipManager-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-NsPayslipManager-tvOS/Pods-NsPayslipManager-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,12 +125,12 @@
 		13B07FAE1A68108700A75B9A /* NsPayslipManager */ = {
 			isa = PBXGroup;
 			children = (
+				F4FD24B424AB6AAC00E4EF44 /* LaunchScreen.xib */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = NsPayslipManager;
@@ -344,8 +344,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4FD24B224AB6AAC00E4EF44 /* LaunchScreen.xib in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,13 +708,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
+		F4FD24B424AB6AAC00E4EF44 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				13B07FB21A68108700A75B9A /* Base */,
+				F4FD24B324AB6AAC00E4EF44 /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = NsPayslipManager;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

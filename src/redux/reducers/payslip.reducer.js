@@ -8,8 +8,7 @@ const Payslip = (state = initState, {type, payload}) => {
   switch (type) {
     case ACTION.UPDATE_NEW_PAYSLIP:
       return {
-        ...state,
-        payslips: [...state.payslips, payload],
+        payslips: [payload, ...state.payslips],
       };
     case ACTION.POPULATE_PAYSLIPS:
       return {
