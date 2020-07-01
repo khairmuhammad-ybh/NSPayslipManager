@@ -1,71 +1,100 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {View, TouchableOpacity, Text} from 'react-native';
-
-// screens
-import HomeScreen from '../screens/home.screen';
-import OcrCompareScreen from '../screens/ocrcompare.screen';
-import ManualPayslipScreen from '../screens/manualpayslip.screen';
-import AboutScreen from '../screens/about.screen';
-
+import {View, TouchableOpacity, Text, Platform, Image} from 'react-native';
+// nested nav
+import DrawerNav from './drawer.navigation';
+import {DrawerActions} from '@react-navigation/native';
+// screen
+import PayslipScreen from '../screens/payslip.screen';
+import PayslipContScreen from '../screens/payslip.cont.screen';
+// setting screens
+import AppInfoScreen from '../screens/appinfo.screen';
+import HowItWorkScreen from '../screens/howitwork.screen';
+import ContactUsScreen from '../screens/contactus.screen';
 // Icons
 import {Icon} from 'react-native-elements';
-
 // styles
 import styles from '../styles/nav.header.style';
-
-// database
-import * as service from '../services/profile.service';
+// resources
+import stringResource from '../resources/string.resource';
+// image resource
+import TextLogo from '../assets/TextLogo.png';
 
 const Stack = createStackNavigator();
-
-onRetrieveProfile = () => {
-  service
-    .deleteProfile()
-    .then(userProfile => {
-      console.log('user profile retrieve');
-      console.log(userProfile);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
 
 function AppStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Drawer"
+        component={DrawerNav}
         options={({navigation, route}) => {
-          console.log(route.state);
           if (route.state === undefined || route.state.index === 0) {
-            return expectedOptions(navigation, route.state);
-          } else if (route.state.index === 1) {
-            return compareOptions(navigation, route.state);
+            return homeOptions(navigation, route.state);
+          } else {
+            return defaultOptions(navigation, route.state);
           }
         }}
       />
-      <Stack.Screen name="ManualPayslip" component={ManualPayslipScreen} />
-      <Stack.Screen name="OcrCompare" component={OcrCompareScreen} />
-      <Stack.Screen name="About" component={AboutScreen} />
+      <Stack.Screen
+        name="AddPayslip"
+        component={PayslipScreen}
+        options={{
+          headerBackTitle: 'Home',
+        }}
+      />
+      <Stack.Screen
+        name="AddPayslipCont"
+        component={PayslipContScreen}
+        options={{
+          title: '',
+        }}
+      />
+      {/* Settings related screens */}
+      <Stack.Screen
+        name="AppInfo"
+        component={AppInfoScreen}
+        options={{
+          headerBackTitle: 'Settings',
+          title: 'Application Info'
+        }}
+      />
+      <Stack.Screen
+        name="How it Work?"
+        component={HowItWorkScreen}
+        options={{
+          headerBackTitle: 'Settings'
+        }}
+      />
+      <Stack.Screen
+        name="Contact Us"
+        component={ContactUsScreen}
+        options={{
+          headerBackTitle: 'Settings'
+        }}
+      />
     </Stack.Navigator>
   );
 }
 
-const expectedOptions = (navigation, routeState) => ({
+const homeOptions = (navigation, routeState) => ({
   headerTitle: () => (
-    <TouchableOpacity
-      style={{alignSelf: 'center'}}
-      onPress={() => onRetrieveProfile()}>
-      <Text>NSPayslipComparer v1.0</Text>
-    </TouchableOpacity>
+    <View style={[styles.headerTitleAlignment, {flexDirection: 'row'}]}>
+      <Image
+        style={Platform.OS == 'ios' ? styles.ImgIOS : styles.Img}
+        source={TextLogo}
+      />
+    </View>
   ),
   headerLeft: () => (
-    <View style={styles.headerComponent}>
-      <TouchableOpacity onPress={() => navigation.navigate('About')}>
-        <Text>About</Text>
-      </TouchableOpacity>
+    <View style={styles.headerIconComponent}>
+      <Icon
+        type="ionicon"
+        name={Platform.OS == 'ios' ? 'ios-menu' : 'md-menu'}
+        size={25}
+        color="black"
+        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+      />
     </View>
   ),
   headerRight: () => (
@@ -75,38 +104,34 @@ const expectedOptions = (navigation, routeState) => ({
         name={'addfile'}
         size={25}
         color="black"
-        onPress={() => navigation.navigate('ManualPayslip')}
+        onPress={() => navigation.navigate('AddPayslip')}
       />
     </View>
   ),
 });
 
-const compareOptions = (navigation, routeState) => ({
-  headerTitle: () => (
+const defaultOptions = (navigation, routeState) => ({
+  headerTitle: routeState.routeNames[routeState.index],
+  headerLeft: () => (
     <TouchableOpacity
-      style={{alignSelf: 'center'}}
-      onPress={() => onRetrieveProfile()}>
-      <Text>NSPayslipComparer v1.0</Text>
+      style={
+        Platform.OS == 'ios'
+          ? [styles.headerComponent, styles.headerDefaultAlignmentIOS]
+          : [styles.headerComponent, styles.headerDefaultAlignment]
+      }
+      onPress={() => navigation.navigate('Home')}>
+      <Icon
+        type="ionicon"
+        name={Platform.OS == 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+        size={25}
+        color={Platform.OS == 'ios' ? 'blue' : 'black'}
+      />
+      {Platform.OS == 'ios' ? (
+        <Text style={styles.headerDefaultTextAlignmenyIOS}>Home</Text>
+      ) : null}
     </TouchableOpacity>
   ),
-  headerLeft: () => (
-    <View style={styles.headerComponent}>
-      <TouchableOpacity onPress={() => navigation.navigate('About')}>
-        <Text>About</Text>
-      </TouchableOpacity>
-    </View>
-  ),
-  headerRight: () => (
-    <View style={styles.headerIconComponent}>
-      <Icon
-        type="antdesign"
-        name={'scan1'}
-        size={25}
-        color="black"
-        onPress={() => navigation.navigate('OcrCompare')}
-      />
-    </View>
-  ),
+  headerRight: () => <View style={styles.headerIconComponent} />,
 });
 
 export default AppStack;

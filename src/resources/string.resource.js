@@ -1,41 +1,94 @@
 const stringResource = {
+  applicationInfo: {
+    applicationName: 'NSPayslipsManager',
+    developer: 'Muhammad Khairi',
+    github: 'NSPayslipManager@Github',
+    version: '1.0',
+    links: {
+      developer: 'https://khairmuhammad-ybh.github.io',
+      github: 'https://github.com/khairmuhammad-ybh/NSPayslipManager',
+      license: '',
+      privacy_policy:
+        'https://khairmuhammad-ybh.github.io/policies/nspsm/nspsm-privacy-policy.html',
+      terms_and_condition:
+        'https://khairmuhammad-ybh.github.io/policies/nspsm/nspsm-terms-and-condition.html',
+    },
+  },
+  settingScreen: {
+    options: [
+      'Contact Us',
+      'Terms and Privacy Policy',
+      'How it work?',
+      'App Info',
+      'Rate Us',
+    ],
+  },
+  howItWorkScreen: {
+    header: 'How we calculate your payslip',
+  },
+  contactUs: {
+    options: ['Send Feedback', 'Ask Question', 'Report Error'],
+    email: 'khairmuhammad.ybh@gmail.com',
+  },
   aboutContent: {
     disclaimer: {
       title: 'DISCLAIMER',
       content:
         'This application were developed to help remove the complication of calculating your payslip manually, and a one stop solution to keep track of your payslips',
     },
-    applicationInfo: {
-      developer: 'Muhammad Khairi',
-      github: 'NSPayslipComparer@Github',
-      version: '1.0',
-    },
   },
   // New format
   formHeaders: {
     // Welcome screen
-    welcome_mainHeader: 'Welcome, please introduce yourself',
-    welcome_sub_headers: ['Name', 'Division/Unit', 'Troop', 'Rank'],
-    welcome_sub_placeholder: ['Name', '', '', '', ''],
-    welcome_buttons: ['Continue'],
-    // ManualPayslip screen
-    manual_mainHeader: 'Please enter details for your payslip',
-    manual_sub_headers: [
-      'Rank',
-      'Month',
-      'Meal Allowance(Unit)',
-      'Deduction (if application)',
-      'Claim/others (if any)',
+    welcome_mainHeaders: [
+      'Welcome, please introduce yourself',
+      'Please specify fixed deduction if any',
     ],
-    manual_sub_placeholder: ['', '', 'No. of units', 'Total amount deduction', 'Total amount claim/others'],
-    manual_buttons: ['Calculate payslip'],
-    other_buttons: ['Reset'],
+    welcome_sub_headers: ['Name', 'Division/Unit', 'Troop', 'Vocation', 'Rank'],
+    welcome_sub_placeholder: ['Name', '', '', '', '', ''],
+    welcome_buttons: ['Continue', 'Register Profile'],
+    welcome_otherHeaders: ['Deduction (if applicable)'],
+    welcome_otherPlaceholders: ['Total deduction'],
+    welcome_policies_acceptance: [
+      'By registering, you agreed and accepted to the policies implies to you',
+    ],
+    // Profile screen
+    profile_mainHeaders: ['Update My Profile'],
+    profile_sub_headers: ['Name', 'Rank', 'Vocation'],
+    profile_buttons: ['Update My Profile'],
+    // Payslip screen
+    payslip_mainHeader: [
+      'Please enter details for your payslip',
+      'Expected total meal allowance',
+    ],
+    payslip_subHeaders: [
+      'Month',
+      'Year',
+      'Total Rank Pay',
+      'Total Meal Allowance',
+      'Total Deductions',
+      'Total Claim/others',
+      'Total Expected Meal Allowance',
+    ],
+    payslip_subPlaceholder: [
+      '',
+      '',
+      'Basic salary amount',
+      'Other Allowance - Vocation Allowance',
+      'Default is always $1',
+      'Default is always $0',
+      '5 * Total no. of meal units',
+    ],
+    payslip_buttons: ['Continue', 'Calculate Payslip'],
   },
   pickersContents: {
     pickerDivContent: {
       prefix: 'Procom',
       units: ['Alpha', 'Bravo', 'Charlie'],
       troops: ['Alpha', 'Bravo', 'Charlie', 'Delta'],
+    },
+    pickerVocationContent: {
+      vocations: ['SLP', 'IRT', 'POI'],
     },
     pickerRankContent: {
       ranks: ['SC2', 'CPL', 'SGT(1)', 'SGT(2)', 'NSPI', 'NSI'],

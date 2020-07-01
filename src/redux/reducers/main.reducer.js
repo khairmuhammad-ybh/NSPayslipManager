@@ -1,15 +1,29 @@
 import {combineReducers} from 'redux';
-import NsPayslipComparer from './nspayslipcomparer.reducer';
+import NSPayslipManager from './nspayslipmanager.reducer';
+import Profile from './profile.reducer';
+import Payslip from './payslip.reducer';
+
 // Redux-Persist
 import AsyncStorage from '@react-native-community/async-storage';
 import {persistReducer} from 'redux-persist';
 
-const NsPayslipComparerPersistConfig = {
-  key: 'nspayslipcomparer',
+const NSPayslipManagerPersistConfig = {
+  key: 'nspayslipmanager',
   storage: AsyncStorage,
   whitelist: ['firstLaunch'],
 };
 
+const NSPayslipManagerProfilePersistConfig = {
+  key: 'profile',
+  storage: AsyncStorage,
+  whitelist: ['name', 'rank', 'vocation'],
+};
+
 export default combineReducers({
-  NsPayslipComparer: persistReducer(NsPayslipComparerPersistConfig, NsPayslipComparer),
+  NSPayslipManager: persistReducer(
+    NSPayslipManagerPersistConfig,
+    NSPayslipManager,
+  ),
+  Profile: persistReducer(NSPayslipManagerProfilePersistConfig, Profile),
+  Payslip: Payslip,
 });

@@ -1,0 +1,152 @@
+import {StyleSheet, Dimensions} from 'react-native';
+
+const styles = StyleSheet.create({
+  topContainer: {
+    flex: 1,
+    width: Dimensions.get('screen').width,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  middleContainer: {
+    flex: 6.5,
+    width: Dimensions.get('screen').width,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  horizontalFlexContainer_one: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: Dimensions.get('screen').width - 30,
+  },
+  horizontalFlexContainer_two: {
+    width: Dimensions.get('screen').width - 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  horizontalFlexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: Dimensions.get('screen').width - 30,
+  },
+  horizontalFlexSubContainer_one: {flex: 1},
+  horizontalFlexSubContainer_two: {flex: 0.7},
+  title: {
+    fontSize: 36,
+    fontStyle: 'normal',
+    textAlign: 'center',
+  },
+  picker: {
+    margin: 10,
+    padding: 8,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    // width: Dimensions.get('screen').width - 30,
+  },
+  inputHeader: {fontSize: 24, marginStart: 10},
+  keyboard: {flex: 1, flexDirection: 'column'},
+  inputText: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width / 3 - 80,
+    flex: 2,
+  },
+  inputTextFlex: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+  },
+  textStyle: {
+    textAlign: 'center',
+  },
+  textStyleIOS: {
+    height: 37,
+    padding: 10,
+  },
+  operator: {
+    height: 37,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  inputLabelAndOrComputation: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width / 3 - 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  inputFullTextIOS: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width - 30,
+  },
+  inputFullText: {
+    height: 40,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    width: Dimensions.get('screen').width - 30,
+  },
+  inputTooltip: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  iconTooltip: {
+    marginRight: 15,
+  },
+  button: {
+    padding: 12,
+    borderColor: '#708CB5',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 3,
+    alignItems: 'center',
+    width: '50%',
+  },
+  dropdown: {
+    height: 37,
+    margin: 10,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+  },
+  tooltipContainer: {
+    backgroundColor: 'transparent',
+  },
+  tooltipImg: {
+    width: Dimensions.get('screen').width - 50,
+    resizeMode: 'contain',
+    alignItems: 'center',
+  },
+  inputStyles: {
+    flex: 2,
+  },
+  currencySymbol: {
+    marginStart: 10,
+  },
+});
+
+export default styles;
